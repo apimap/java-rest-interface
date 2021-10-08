@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'io.apimap.api'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.0'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.11.0'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-core', version: '1.1.49'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.2'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/apimap/java-rest-interface")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
