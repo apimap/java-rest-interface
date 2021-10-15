@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
@@ -40,6 +42,8 @@ import java.util.List;
     name="API Collection Item",
     description = "Entity used to return lists of APIs"
 )
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeName(value = "data")
 public class ApiCollectionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;
     public static final String NAME_KEY = "name";
@@ -50,31 +54,31 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     public static final String DOCUMENTATION_KEY = "documentation";
 
     @Schema(hidden = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonIgnore
     protected ApiDataApiMetadataEntity meta;
 
     @Schema(hidden = true)
-    @JsonProperty(NAME_KEY)
+    @JsonIgnore
     protected String name;
 
     @Schema(hidden = true)
-    @JsonProperty(CODE_REPOSITORY_KEY)
+    @JsonIgnore
     protected String codeRepository;
 
     @Schema(hidden = true)
-    @JsonProperty(DESCRIPTION_KEY)
+    @JsonIgnore
     protected String description;
 
     @Schema(hidden = true)
-    @JsonProperty(STATUS_KEY)
+    @JsonIgnore
     protected String status;
 
     @Schema(hidden = true)
-    @JsonProperty(VERSION_KEY)
+    @JsonIgnore
     protected String version;
 
     @Schema(hidden = true)
-    @JsonProperty(DOCUMENTATION_KEY)
+    @JsonIgnore
     protected List<String> documentation;
 
     @Schema(hidden = true)
@@ -192,8 +196,10 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {
         HashMap links = new HashMap();
-        links.put("self", uri);
 
+        if(uri != null){ links.put("self", uri); }
+
+        if(links.size() < 1) return null;
         return links;
     }
 

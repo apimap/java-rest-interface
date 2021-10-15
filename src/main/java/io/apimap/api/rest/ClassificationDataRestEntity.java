@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
@@ -39,6 +41,8 @@ import java.util.HashMap;
         name="Classification",
         description = "Connection object between the taxonomy and an API"
 )
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeName(value = "data")
 public class ClassificationDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.CLASSIFICATION_ELEMENT;
     public static final String URN_KEY = "urn";
@@ -48,11 +52,11 @@ public class ClassificationDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Base.class)
     protected String type = TYPE;
 
-    @JsonProperty(URN_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String urn;
 
-    @JsonProperty(TAXONOMY_VERSION_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String taxonomyVersion;
 
@@ -89,6 +93,7 @@ public class ClassificationDataRestEntity extends DataRestEntity {
         this.id = urn + "#" + taxonomyVersion;
     }
 
+    @JsonIgnore
     public String getNid() {
         if (this.urn != null) {
             String[] parts = this.urn.split(":");
@@ -153,8 +158,10 @@ public class ClassificationDataRestEntity extends DataRestEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {
         HashMap links = new HashMap();
-        links.put("self", uri);
 
+        if(uri != null) links.put("self", uri);
+
+        if(links.size() < 1) return null;
         return links;
     }
 

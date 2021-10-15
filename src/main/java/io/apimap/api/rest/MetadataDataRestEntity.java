@@ -70,56 +70,56 @@ public class MetadataDataRestEntity extends DataRestEntity {
     Name
      */
     @Schema(hidden = true)
-    @JsonProperty(NAME_KEY)
+    @JsonIgnore
     protected String name;
 
     @Schema(hidden = true)
-    @JsonProperty(VISIBILITY_KEY)
+    @JsonIgnore
     protected String visibility;
 
     @Schema(hidden = true)
-    @JsonProperty(DESCRIPTION_KEY)
+    @JsonIgnore
     protected String description;
 
     /*
     Version
      */
     @Schema(hidden = true)
-    @JsonProperty(API_VERSION_KEY)
+    @JsonIgnore
     protected String apiVersion;
 
     @Schema(hidden = true)
-    @JsonProperty(RELEASE_STATUS_KEY)
+    @JsonIgnore
     protected String releaseStatus;
 
     @Schema(hidden = true)
-    @JsonProperty(SYSTEM_IDENTIFIER_KEY)
+    @JsonIgnore
     protected String systemIdentifier;
 
     @Schema(hidden = true)
-    @JsonProperty(DOCUMENTATION_KEY)
+    @JsonIgnore
     protected List<String> documentation;
 
     /*
     Implementation
      */
     @Schema(hidden = true)
-    @JsonProperty(INTERFACE_SPECIFICATION_KEY)
+    @JsonIgnore
     protected String interfaceSpecification;
 
     @Schema(hidden = true)
-    @JsonProperty(INTERFACE_DESCRIPTION_LANGUAGE_KEY)
+    @JsonIgnore
     protected String interfaceDescriptionLanguage;
 
     /*
     Organization
      */
     @Schema(hidden = true)
-    @JsonProperty(ARCHITECTURE_LAYER_KEY)
+    @JsonIgnore
     protected String architectureLayer;
 
     @Schema(hidden = true)
-    @JsonProperty(BUSINESS_UNIT_KEY)
+    @JsonIgnore
     protected String businessUnit;
 
     public MetadataDataRestEntity() {
@@ -349,20 +349,19 @@ public class MetadataDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, Object> getLinks() {
-        HashMap links = new HashMap();
-        links.put("self", uri);
+        HashMap<String,Object> links = new HashMap<String,Object>();
 
-        if(this.links != null) {
-            links.putAll(this.links);
-        }
+        if(this.uri != null) links.put("self", uri);
+        if(this.links != null) links.putAll(this.links);
 
+        if(links.size() < 1) return null;
         return links;
     }
 
     public void addRelatedRef(String rel, URI uri) {
-        ArrayList related = (ArrayList) this.links.getOrDefault("related", new ArrayList<>());
+        ArrayList<HashMap<String,String>> related = (ArrayList<HashMap<String,String>>) this.links.getOrDefault("related", new ArrayList<>());
 
-        HashMap item = new HashMap();
+        HashMap<String,String> item = new HashMap<String,String>();
         item.put("href", uri.toString());
         item.put("rel", rel);
 

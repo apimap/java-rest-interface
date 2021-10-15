@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
@@ -39,6 +41,8 @@ import java.util.HashMap;
         name="API",
         description = "Core API entity used to describe an API"
 )
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeName(value = "data")
 public class ApiDataRestEntity extends DataRestEntity{
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;
     public static final String META_KEY = "meta";
@@ -46,16 +50,15 @@ public class ApiDataRestEntity extends DataRestEntity{
     public static final String CODE_REPOSITORY_KEY = "codeRepository";
 
     @Schema(hidden = true)
-    @JsonView(JsonApiViews.Base.class)
     @JsonProperty(META_KEY)
     protected ApiDataApiMetadataEntity meta;
 
     @Schema(hidden = true)
-    @JsonProperty(NAME_KEY)
+    @JsonIgnore
     protected String name;
 
     @Schema(hidden = true)
-    @JsonProperty(CODE_REPOSITORY_KEY)
+    @JsonIgnore
     protected String codeRepository;
 
     @Schema(hidden = true)
@@ -87,12 +90,11 @@ public class ApiDataRestEntity extends DataRestEntity{
         this.uri = uri;
     }
 
-    public ApiDataRestEntity(ApiDataApiMetadataEntity meta, String name, String codeRepository, String uri, String type, JsonApiRelationships relationships) {
+    public ApiDataRestEntity(ApiDataApiMetadataEntity meta, String name, String codeRepository, String uri, JsonApiRelationships relationships) {
         this.meta = meta;
         this.name = name;
         this.codeRepository = codeRepository;
         this.uri = uri;
-        this.type = type;
         this.relationships = relationships;
     }
 
@@ -149,8 +151,10 @@ public class ApiDataRestEntity extends DataRestEntity{
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {
         HashMap links = new HashMap();
-        links.put("self", uri);
 
+        if(uri != null) links.put("self", uri);
+
+        if(links.size() < 1) return null;
         return links;
     }
 

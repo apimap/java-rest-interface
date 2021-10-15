@@ -22,8 +22,11 @@ package io.apimap.api.rest;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
@@ -40,15 +43,20 @@ import java.util.HashMap;
         name="API Version",
         description = "Core version entity used to describe an API version"
 )
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeName(value = "data")
 public class ApiVersionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.VERSION_ELEMENT;
 
+    public static final String VERSION_KEY = "version";
+    public static final String CREATED_KEY = "created";
+
     @Schema(hidden = true)
+    @JsonIgnore
     protected String version;
 
     @Schema(hidden = true)
-    @JsonView(JsonApiViews.Complete.class)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonIgnore
     protected Date created;
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
@@ -118,10 +126,14 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
     public static class Attributes {
+        @JsonProperty(VERSION_KEY)
+        @Schema(description = "URL to the main API code repository",example = "http//github/helloworld", required = false)
         protected String version;
 
         @JsonView(JsonApiViews.Complete.class)
         @JsonFormat(pattern = "yyyy-MM-dd")
+        @JsonProperty(CREATED_KEY)
+        @Schema(description = "URL to the main API code repository", example = "http//github/helloworld", required = false)
         protected Date created;
 
         public Attributes(String version, Date created) {
@@ -157,8 +169,10 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {
         HashMap links = new HashMap();
-        links.put("self", uri);
 
+        if(uri != null){ links.put("self", uri); }
+
+        if(links.size() < 1) return null;
         return links;
     }
 
