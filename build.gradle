@@ -12,7 +12,7 @@ repositories {
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
-    implementation 'org.springdoc:springdoc-openapi-common:1.5.11'
+    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.11'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.2'
 }
