@@ -60,7 +60,7 @@ public class JsonApiRelationships {
     }
 
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, Link> getRelationships() {
         return relationships;
@@ -75,11 +75,11 @@ public class JsonApiRelationships {
 
     @Schema(hidden = true)
     public class Link {
-        @JsonView(JsonApiViews.Base.class)
+        @JsonView(JsonApiViews.Default.class)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         protected HashMap<String, String> links = new HashMap<>();
 
-        @JsonView(JsonApiViews.Base.class)
+        @JsonView(JsonApiViews.Default.class)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         protected ArrayList<HashMap<String, String>> data = new ArrayList();
 

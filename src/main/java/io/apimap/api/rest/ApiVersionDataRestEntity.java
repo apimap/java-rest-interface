@@ -59,7 +59,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     protected Date created;
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonIgnore
@@ -127,12 +127,13 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     public static class Attributes {
         @JsonProperty(VERSION_KEY)
         @Schema(description = "URL to the main API code repository",example = "http//github/helloworld", required = false)
+        @JsonView(JsonApiViews.Default.class)
         protected String version;
 
-        @JsonView(JsonApiViews.Complete.class)
+        @JsonView(JsonApiViews.Default.class)
         @JsonFormat(pattern = "yyyy-MM-dd")
         @JsonProperty(CREATED_KEY)
-        @Schema(description = "URL to the main API code repository", example = "http//github/helloworld", required = false)
+        @Schema(description = "Date created", required = false)
         protected Date created;
 
         public Attributes(String version, Date created) {
@@ -150,7 +151,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Attributes getAttributes() {
         return new Attributes(

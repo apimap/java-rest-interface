@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClassificationTreeRootRestEntity extends RootRestEntity {
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     protected ArrayList<ClassificationTreeDataRestEntity> data = new ArrayList<>();
 

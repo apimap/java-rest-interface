@@ -57,7 +57,7 @@ public class MetadataDataRestEntity extends DataRestEntity {
     public static final String DESCRIPTION_KEY = "description";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonIgnore
@@ -249,36 +249,47 @@ public class MetadataDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(NAME_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String name;
 
         @JsonProperty(VISIBILITY_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String visibility;
 
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         @JsonProperty(API_VERSION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String apiVersion;
 
         @JsonProperty(RELEASE_STATUS_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String releaseStatus;
 
         @JsonProperty(SYSTEM_IDENTIFIER_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String systemIdentifier;
 
         @JsonProperty(DOCUMENTATION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected List<String> documentation;
 
         @JsonProperty(INTERFACE_SPECIFICATION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String interfaceSpecification;
 
         @JsonProperty(INTERFACE_DESCRIPTION_LANGUAGE_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String interfaceDescriptionLanguage;
 
         @JsonProperty(ARCHITECTURE_LAYER_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String architectureLayer;
 
         @JsonProperty(BUSINESS_UNIT_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String businessUnit;
 
         public Attributes(String name, String visibility, String description, String apiVersion, String releaseStatus, String systemIdentifier, List<String> documentation, String interfaceSpecification, String interfaceDescriptionLanguage, String architectureLayer, String businessUnit) {
@@ -314,7 +325,7 @@ public class MetadataDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 name,

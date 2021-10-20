@@ -47,7 +47,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     public static final String TOKEN_KEY = "token";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonProperty(NAME_KEY)
@@ -64,7 +64,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
 
     @JsonProperty(TOKEN_KEY)
     @Schema(hidden = true)
-    @JsonView(JsonApiViews.Hidden.class)
+    @JsonView(JsonApiViews.Extended.class)
     protected String token;
 
     @Schema(hidden = true)
@@ -149,17 +149,20 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Attributes {
         @JsonProperty(NAME_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String name;
 
         @JsonProperty(NID_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String nid;
 
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         @JsonProperty(TOKEN_KEY)
         @Schema(hidden = true)
-        @JsonView(JsonApiViews.Hidden.class)
+        @JsonView(JsonApiViews.Extended.class)
         protected String token;
 
         public Attributes(String name, String nid, String description, String token) {
@@ -181,7 +184,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Attributes getAttributes() {
         return new Attributes(

@@ -44,7 +44,7 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
     public static final String ENTITIES_KEY = "entities";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonProperty(URN_KEY)
@@ -156,18 +156,23 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(URN_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String urn;
 
         @JsonProperty(URL_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String url;
 
         @JsonProperty(TITLE_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String title;
 
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         @JsonProperty(ENTITIES_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected ArrayList<TaxonomyTreeDataRestEntity> entities = new ArrayList<>();
 
         public Attributes(String urn, String url, String title, String description, ArrayList<TaxonomyTreeDataRestEntity> entities) {
@@ -191,7 +196,7 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 urn,

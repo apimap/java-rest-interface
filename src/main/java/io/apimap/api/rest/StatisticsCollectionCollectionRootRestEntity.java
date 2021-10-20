@@ -33,7 +33,7 @@ public class StatisticsCollectionCollectionRootRestEntity extends RootRestEntity
     public static final String TYPE = JsonApiRootObject.STATISTICS_COLLECTION;
 
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     protected ArrayList<StatisticsCollectionDataRestEntity> data = new ArrayList<>();
 

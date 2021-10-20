@@ -86,7 +86,7 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     protected String uri;
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @Schema(hidden = true)
@@ -116,26 +116,32 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     public static class Attributes {
         @Schema(description = "API name", example = "Hello World", required = true)
         @JsonProperty(NAME_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String name;
 
         @Schema(description = "URL to the main API code repository",example = "http//github/helloworld", required = false)
         @JsonProperty(CODE_REPOSITORY_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String codeRepository;
 
         @Schema(description = "API description", example = "This Hello World API is used to create new worlds", required = true)
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         @Schema(description = "Lifecycle status of the API", example = "In production", required = true)
         @JsonProperty(STATUS_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String status;
 
         @Schema(description = "Provided API version", example = "1.0.0", required = true)
         @JsonProperty(VERSION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String version;
 
         @Schema(description = "List of URLs where more documentation is to be found.", example = "http://localhost/doc", required = false)
         @JsonProperty(DOCUMENTATION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected List<String> documentation;
 
         public Attributes(String name, String codeRepository, String description, String status, String version, List<String> documentation) {
@@ -161,7 +167,7 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 name,

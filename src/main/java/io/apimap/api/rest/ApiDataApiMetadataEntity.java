@@ -34,7 +34,7 @@ public class ApiDataApiMetadataEntity{
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;
     public static final String TOKEN_KEY = "token";
 
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonProperty(TOKEN_KEY)
     protected String token;
 

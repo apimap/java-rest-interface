@@ -23,16 +23,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JsonApiViews {
-    public static class Hidden extends Complete {
-
+    public static class Extended extends Default {
     }
 
-    public static class Complete extends Base {
+    public static class Collection extends Default {
     }
 
-    public static class Collection extends Base {
-    }
-
-    public static class Base {
+    public static class Default {
     }
 }

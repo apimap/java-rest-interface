@@ -49,7 +49,7 @@ public class ClassificationDataRestEntity extends DataRestEntity {
     public static final String TAXONOMY_VERSION_KEY = "taxonomyVersion";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonIgnore
@@ -118,9 +118,11 @@ public class ClassificationDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(URN_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String urn;
 
         @JsonProperty(TAXONOMY_VERSION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String taxonomyVersion;
 
         public Attributes(String urn, String taxonomyVersion) {
@@ -138,7 +140,7 @@ public class ClassificationDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 urn,

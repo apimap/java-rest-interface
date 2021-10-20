@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
         description = "Contains all related entities linked with the content returned inside 'data'"
 )
 public class DataRestEntity {
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @Schema(description = "Unique Object ID", example = "ID1", required = true)
     protected String id;
 

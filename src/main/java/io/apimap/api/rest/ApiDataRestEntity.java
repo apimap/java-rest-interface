@@ -51,6 +51,7 @@ public class ApiDataRestEntity extends DataRestEntity{
 
     @Schema(hidden = true)
     @JsonProperty(META_KEY)
+    @JsonView(JsonApiViews.Extended.class)
     protected ApiDataApiMetadataEntity meta;
 
     @Schema(hidden = true)
@@ -65,7 +66,7 @@ public class ApiDataRestEntity extends DataRestEntity{
     @JsonIgnore
     protected String uri;
 
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
     protected String type = TYPE;
 
@@ -105,10 +106,12 @@ public class ApiDataRestEntity extends DataRestEntity{
     public static class Attributes {
         @JsonProperty(NAME_KEY)
         @Schema(description = "API name",example = "Hello World", required = true)
+        @JsonView(JsonApiViews.Default.class)
         protected String name;
 
         @JsonProperty(CODE_REPOSITORY_KEY)
         @Schema(description = "URL to the main API code repository",example = "http//github/helloworld", required = false)
+        @JsonView(JsonApiViews.Default.class)
         protected String codeRepository;
 
         public Attributes(String name, String codeRepository) {
@@ -126,7 +129,7 @@ public class ApiDataRestEntity extends DataRestEntity{
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 name,

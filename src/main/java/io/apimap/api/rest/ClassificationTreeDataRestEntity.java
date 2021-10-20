@@ -47,7 +47,7 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     public static final String TITLE_KEY = "title";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonProperty(PATH_KEY)
@@ -113,12 +113,15 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(PATH_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected ArrayList<String> path;
 
         @JsonProperty(URN_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String urn;
 
         @JsonProperty(TITLE_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String title;
 
         public Attributes(ArrayList<String> path, String urn, String title) {
@@ -138,7 +141,7 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 path,

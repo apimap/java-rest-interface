@@ -41,7 +41,7 @@ public class JsonApiIncluded {
     }
 
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public ArrayList<DataRestEntity> getIncluded() {
         return included;

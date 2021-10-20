@@ -56,22 +56,22 @@ public class JsonApiRootObject<T> {
     public static final String MESH_ELEMENT = "mesh:element";
 
     @Schema(description = "Resource/collection main object")
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected T data;
 
     @Schema(description = "Urls connecting this resource/collection with other related resources/collections")
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected HashMap<String, Object> links = new HashMap<>();
 
     @Schema(description = "Human readable metadata")
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected HashMap<String, String> meta = new HashMap<>();
 
     @Schema(description = "Generic JSON:API implementation details")
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected HashMap<String, String> jsonapi = new HashMap<>();
 
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Schema(description = "Contains all related entities linked with the content returned inside 'data'")
     protected ArrayList<DataRestEntity> included = new ArrayList();

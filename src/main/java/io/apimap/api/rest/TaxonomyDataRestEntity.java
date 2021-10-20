@@ -46,7 +46,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public static final String DESCRIPTION_KEY = "description";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @JsonProperty(URN_KEY)
@@ -66,7 +66,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     protected String description;
 
     @Schema(hidden = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String taxonomyVersion;
 
     @Schema(hidden = true)
@@ -141,15 +141,19 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(URN_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String urn;
 
         @JsonProperty(TITLE_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String title;
 
         @JsonProperty(URL_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String url;
 
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         public Attributes(String urn, String title, String url, String description) {
@@ -171,7 +175,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     public Attributes getAttributes() {
         return new Attributes(
                 urn,

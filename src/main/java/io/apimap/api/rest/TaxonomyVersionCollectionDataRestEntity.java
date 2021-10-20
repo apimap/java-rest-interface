@@ -53,7 +53,7 @@ public class TaxonomyVersionCollectionDataRestEntity extends DataRestEntity {
     protected String nid;
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @Schema(hidden = true)
@@ -107,9 +107,11 @@ public class TaxonomyVersionCollectionDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(VERSION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String version;
 
         @JsonProperty(NID_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String nid;
 
         public Attributes(String version, String nid) {
@@ -127,7 +129,7 @@ public class TaxonomyVersionCollectionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Attributes getAttributes() {
         return new Attributes(

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaxonomyVersionCollectionRootRestEntity extends RootRestEntity {
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     protected ArrayList<TaxonomyVersionCollectionDataRestEntity> data = new ArrayList<>();
 

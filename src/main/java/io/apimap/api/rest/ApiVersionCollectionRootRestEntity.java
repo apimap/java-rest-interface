@@ -30,7 +30,7 @@ import java.util.ArrayList;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiVersionCollectionRootRestEntity extends RootRestEntity {
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected ArrayList<ApiVersionDataRestEntity> versions = new ArrayList<>();
 
     public ApiVersionCollectionRootRestEntity() {

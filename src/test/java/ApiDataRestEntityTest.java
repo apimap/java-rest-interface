@@ -20,7 +20,6 @@ public class ApiDataRestEntityTest {
 
     @Test
     void defaultServerClientObject_didSucceed() throws URISyntaxException, JsonProcessingException {
-
         ApiDataApiMetadataEntity metadata = new ApiDataApiMetadataEntity("token");
 
         ApiDataRestEntity content = new ApiDataRestEntity(
@@ -46,5 +45,17 @@ public class ApiDataRestEntityTest {
 
         assertEquals("API Catalog Example API", output.getName());
         assertEquals("api:element", output.getType());
+    }
+
+    @Test
+    void serializeInsideRootContainerObject_didSucceed() throws JsonProcessingException {
+        ApiDataRestEntity object = new ApiDataRestEntity("name", "codeRepository");
+        JsonApiRootObject rootObject = new JsonApiRootObject(object);
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        System.out.println(objectMapper.writeValueAsString(rootObject));
+        assertEquals(objectMapper.writeValueAsString(object), "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"}}}");
     }
 }

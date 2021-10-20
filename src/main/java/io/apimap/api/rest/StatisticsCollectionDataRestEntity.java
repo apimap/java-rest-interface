@@ -42,7 +42,7 @@ public class StatisticsCollectionDataRestEntity extends DataRestEntity {
     public static final String DESCRIPTION_KEY = "description";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
     @Schema(hidden = true)
@@ -89,6 +89,7 @@ public class StatisticsCollectionDataRestEntity extends DataRestEntity {
     )
     public static class Attributes {
         @JsonProperty(DESCRIPTION_KEY)
+        @JsonView(JsonApiViews.Default.class)
         protected String description;
 
         public Attributes(String description) {
@@ -104,7 +105,7 @@ public class StatisticsCollectionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public Attributes getAttributes() {
         return new Attributes(

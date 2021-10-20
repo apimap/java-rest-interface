@@ -34,7 +34,7 @@ import java.util.ArrayList;
 @JsonTypeName(value = "data")
 public class ApiCollectionRootRestEntity extends RootRestEntity {
     @JsonValue
-    @JsonView(JsonApiViews.Base.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     protected ArrayList<ApiCollectionDataRestEntity> data = new ArrayList<>();
 
