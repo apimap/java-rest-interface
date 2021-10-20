@@ -42,7 +42,7 @@ import java.util.List;
     name="API Collection Item",
     description = "Entity used to return lists of APIs"
 )
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME, property = "type", visible=true)
 @JsonTypeName(value = "data")
 public class ApiCollectionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;

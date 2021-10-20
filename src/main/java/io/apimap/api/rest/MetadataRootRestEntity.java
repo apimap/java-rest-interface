@@ -20,8 +20,6 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

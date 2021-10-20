@@ -24,10 +24,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.HashMap;
 

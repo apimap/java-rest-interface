@@ -20,8 +20,8 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(
         name="Json:api Container Related Object",

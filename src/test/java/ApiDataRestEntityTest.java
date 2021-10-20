@@ -36,4 +36,15 @@ public class ApiDataRestEntityTest {
         ObjectMapper objectMapper = new ObjectMapper();
         assertEquals(objectMapper.writeValueAsString(object), "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"},\"links\":{\"self\":\"http://localhost:8080\"},\"meta\":{\"token\":\"token\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}");
     }
+
+    @Test
+    void deserializeString_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"API Catalog Example API\",\"codeRepository\":null}}}";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ApiDataRestEntity output = objectMapper.readValue(input, ApiDataRestEntity.class);
+
+        assertEquals("API Catalog Example API", output.getName());
+        assertEquals("api:element", output.getType());
+    }
 }

@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.apimap.api.rest.ApiDataRestEntity;
 import io.apimap.api.rest.ApiVersionDataRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,17 @@ public class ApiVersionDataRestEntityTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         assertEquals(objectMapper.writeValueAsString(object), "{\"data\":{\"id\":\"1.0.0\",\"type\":\"version:element\",\"attributes\":{\"version\":\"1.0.0\",\"created\":\"1970-01-01\"},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}");
+    }
+
+    @Test
+    void deserializeString_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"type\":\"version:element\",\"attributes\":{\"version\":\"1.0.0\",\"created\":null}}}";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ApiVersionDataRestEntity output = objectMapper.readValue(input, ApiVersionDataRestEntity.class);
+
+        assertEquals("1.0.0", output.getVersion());
+        assertEquals("version:element", output.getType());
     }
 }
 

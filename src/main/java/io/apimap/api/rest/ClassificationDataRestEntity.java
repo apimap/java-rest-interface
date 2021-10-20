@@ -41,7 +41,7 @@ import java.util.HashMap;
         name="Classification",
         description = "Connection object between the taxonomy and an API"
 )
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME, property = "type", visible=true)
 @JsonTypeName(value = "data")
 public class ClassificationDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.CLASSIFICATION_ELEMENT;

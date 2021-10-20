@@ -22,7 +22,6 @@ package io.apimap.api.rest;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -43,7 +42,7 @@ import java.util.HashMap;
         name="API Version",
         description = "Core version entity used to describe an API version"
 )
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME, property = "type", visible=true)
 @JsonTypeName(value = "data")
 public class ApiVersionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.VERSION_ELEMENT;
