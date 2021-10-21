@@ -43,6 +43,7 @@ import java.util.HashMap;
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT, property = "type", visible=true)
 @JsonTypeName(value = "data")
+
 public class ApiDataRestEntity extends DataRestEntity{
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;
     public static final String META_KEY = "meta";
@@ -75,6 +76,10 @@ public class ApiDataRestEntity extends DataRestEntity{
     protected JsonApiRelationships relationships;
 
     public ApiDataRestEntity() {
+    }
+
+    public ApiDataRestEntity(String name) {
+        this.name = name;
     }
 
     public ApiDataRestEntity(String name, String codeRepository) {
