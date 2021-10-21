@@ -1,5 +1,8 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
 import io.apimap.api.rest.ApiDataApiMetadataEntity;
 import io.apimap.api.rest.ApiDataRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
@@ -8,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ApiDataRestEntityTest {
     @Test
@@ -45,5 +49,18 @@ public class ApiDataRestEntityTest {
 
         assertEquals("API Catalog Example API", output.getName());
         assertEquals("api:element", output.getType());
+    }
+
+    @Test
+    void deserializeInsideRootContainerObject_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"id\":\"API Catalog Example API\",\"type\":\"api:element\",\"attributes\":{\"name\":\"API Catalog Example API\",\"codeRepository\":null},\"meta\":{\"token\":\"8d97aa91-aee4-411b-b24b-7fd6569fcddf\"}},\"links\":{\"related\":[{\"rel\":\"api:collection\",\"href\":\"http://172.17.0.1:8080/api\"},{\"rel\":\"classification:collection\",\"href\":\"http://172.17.0.1:8080/classification\"},{\"rel\":\"taxonomy:collection\",\"href\":\"http://172.17.0.1:8080/taxonomy\"}],\"self\":\"http://172.17.0.1:8080/api/API+Catalog+Example+API\"},\"meta\":{\"Copyright\":\"Copyright (c) October 20, 2021 Telenor Norway\",\"Support\":\"Any questions? Please contact us @ https://prima.corp.telenor.no/confluence/display/APIEXP\",\"OpenAPI 3\":\"http://172.17.0.1:8080/documentation/openapi3\",\"Documentation\":\"API documentation available @ https://prima.corp.telenor.no/confluence/display/APIEXP\",\"millis\":\"79\",\"Host Identifier\":\"ace6709e-d154-4619-a07f-9b117947173a\"},\"jsonapi\":{\"version\":\"1.1\"}}";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRootObject.class, ApiDataRestEntity.class);
+        JsonApiRootObject<ApiDataRestEntity> output = objectMapper.readValue(input, type);
+
+        assertNotNull(output);
     }
 }

@@ -23,9 +23,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
@@ -41,9 +44,8 @@ import java.util.HashMap;
         name="API",
         description = "Core API entity used to describe an API"
 )
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT, property = "type", visible=true)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NONE)
 @JsonTypeName(value = "data")
-
 public class ApiDataRestEntity extends DataRestEntity{
     public static final String TYPE = JsonApiRootObject.API_ELEMENT;
     public static final String META_KEY = "meta";
