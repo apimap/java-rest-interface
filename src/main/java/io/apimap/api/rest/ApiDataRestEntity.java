@@ -151,7 +151,7 @@ public class ApiDataRestEntity extends DataRestEntity{
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Collection.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
         return this.relationships;
