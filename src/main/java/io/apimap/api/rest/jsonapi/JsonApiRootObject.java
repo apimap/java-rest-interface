@@ -107,6 +107,22 @@ public class JsonApiRootObject<T> {
         this.data = data;
     }
 
+    public void setLinks(HashMap<String, Object> links) {
+        this.links = links;
+    }
+
+    public void setMeta(HashMap<String, String> meta) {
+        this.meta = meta;
+    }
+
+    public void setJsonapi(HashMap<String, String> jsonapi) {
+        this.jsonapi = jsonapi;
+    }
+
+    public void setIncluded(ArrayList<DataRestEntity> included) {
+        this.included = included;
+    }
+
     public HashMap<String, Object> getLinks() {
         return links;
     }

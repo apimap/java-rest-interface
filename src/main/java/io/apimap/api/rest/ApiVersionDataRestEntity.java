@@ -42,7 +42,7 @@ import java.util.HashMap;
         name="API Version",
         description = "Core version entity used to describe an API version"
 )
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NONE)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
 @JsonTypeName(value = "data")
 public class ApiVersionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRootObject.VERSION_ELEMENT;
