@@ -75,8 +75,7 @@ public class ApiDataRestEntity extends DataRestEntity{
     protected String type = TYPE;
 
     @Schema(hidden = true)
-    @JsonIgnore
-    protected JsonApiRelationships relationships;
+    private JsonApiRelationships relationships;
 
     public ApiDataRestEntity() {
     }
@@ -155,6 +154,10 @@ public class ApiDataRestEntity extends DataRestEntity{
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
         return this.relationships;
+    }
+
+    public void setRelationships(JsonApiRelationships relationships) {
+        this.relationships = relationships;
     }
 
     @JsonProperty
