@@ -32,6 +32,8 @@ import java.util.HashMap;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JsonApiRelationships {
 
+    @JsonValue
+    @JsonView(JsonApiViews.Default.class)
     protected HashMap<String, Link> relationships = new HashMap<>();
 
     public JsonApiRelationships() {
@@ -64,6 +66,10 @@ public class JsonApiRelationships {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, Link> getRelationships() {
         return relationships;
+    }
+
+    public void setRelationships(HashMap<String, Link> relationships) {
+        this.relationships = relationships;
     }
 
     @Override
@@ -107,6 +113,14 @@ public class JsonApiRelationships {
 
         public ArrayList<HashMap<String, String>> getData() {
             return data;
+        }
+
+        public void setLinks(HashMap<String, String> links) {
+            this.links = links;
+        }
+
+        public void setData(ArrayList<HashMap<String, String>> data) {
+            this.data = data;
         }
 
         @Override
