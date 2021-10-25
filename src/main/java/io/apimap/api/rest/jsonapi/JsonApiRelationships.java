@@ -20,6 +20,7 @@ under the License.
 package io.apimap.api.rest.jsonapi;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -42,6 +43,11 @@ public class JsonApiRelationships {
     protected HashMap<String, Link> relationships = new HashMap<>();
 
     public JsonApiRelationships() {
+    }
+
+    @JsonCreator
+    public JsonApiRelationships(HashMap<String, Link> relationships) {
+        this.relationships = relationships;
     }
 
     public void addRelationshipRef(String key, URI uri) {
@@ -82,7 +88,7 @@ public class JsonApiRelationships {
     }
 
     @Schema(hidden = true)
-    public class Link {
+    public static class Link {
         @JsonView(JsonApiViews.Default.class)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         protected HashMap<String, String> links = new HashMap<>();
@@ -90,6 +96,10 @@ public class JsonApiRelationships {
         @JsonView(JsonApiViews.Default.class)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         protected ArrayList<HashMap<String, String>> data = new ArrayList();
+
+        @JsonCreator
+        public Link() {
+        }
 
         public void setSelf(URI uri) {
             links.put("self", uri.toString());
