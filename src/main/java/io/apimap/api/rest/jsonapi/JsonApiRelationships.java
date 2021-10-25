@@ -38,6 +38,7 @@ public class JsonApiRelationships {
 
     @JsonValue
     @JsonView(JsonApiViews.Default.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     protected HashMap<String, Link> relationships = new HashMap<>();
 
     public JsonApiRelationships() {
@@ -65,9 +66,6 @@ public class JsonApiRelationships {
         link.addDataRef(type, id);
     }
 
-    @JsonValue
-    @JsonView(JsonApiViews.Default.class)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, Link> getRelationships() {
         return relationships;
     }
