@@ -19,6 +19,7 @@ under the License.
 
 package io.apimap.api.rest.jsonapi;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -30,6 +31,9 @@ import java.util.HashMap;
 
 @Schema(hidden = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonAutoDetect(
+        getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
+)
 public class JsonApiRelationships {
 
     @JsonValue
