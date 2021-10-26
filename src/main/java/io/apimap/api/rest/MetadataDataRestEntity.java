@@ -23,10 +23,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -44,10 +42,8 @@ import java.util.List;
         name="Metadata",
         description = "Object describing the metadata collection for each API version"
 )
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-@JsonTypeName(value = "data")
 public class MetadataDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRootObject.METADATA_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.METADATA_ELEMENT;
     public static final String NAME_KEY = "name";
     public static final String VISIBILITY_KEY = "visibility";
     public static final String API_VERSION_KEY = "api version";

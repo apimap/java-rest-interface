@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,7 +31,7 @@ import io.apimap.api.rest.jsonapi.JsonApiViews;
         getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
 )
 public class ApiDataApiMetadataEntity{
-    public static final String TYPE = JsonApiRootObject.API_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.API_ELEMENT;
     public static final String TOKEN_KEY = "token";
 
     @JsonView(JsonApiViews.Default.class)

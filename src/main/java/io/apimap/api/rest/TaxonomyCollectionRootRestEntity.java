@@ -23,14 +23,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 
 import java.util.ArrayList;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaxonomyCollectionRootRestEntity extends RootRestEntity {
-    public static final String TYPE = JsonApiRootObject.TAXONOMY_COLLECTION;
+    public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_COLLECTION;
 
     @JsonValue
     @JsonView(JsonApiViews.Default.class)

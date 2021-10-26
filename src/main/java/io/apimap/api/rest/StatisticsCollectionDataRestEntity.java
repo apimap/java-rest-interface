@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -38,7 +38,7 @@ import java.util.HashMap;
         name="Statistics Collection Item"
 )
 public class StatisticsCollectionDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRootObject.STATISTICS_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.STATISTICS_ELEMENT;
     public static final String DESCRIPTION_KEY = "description";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)

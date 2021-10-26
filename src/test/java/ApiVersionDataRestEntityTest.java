@@ -1,15 +1,35 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiVersionDataRestEntity;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ApiVersionDataRestEntityTest {
+    @Test
+    void generateRestRequest_didSucceed(){
+        assertTrue(false);
+    }
+
+    @Test
+    void receivedRestRequest_didSucceed(){
+
+    }
+
+    @Test
+    void generatedRestResponse_didSucceed(){
+
+    }
+
+    @Test
+    void receivedRestResponse_didSucceed(){
+
+    }
     @Test
     void defaultClientServerObject_didSucceed() throws JsonProcessingException {
         ApiVersionDataRestEntity object = new ApiVersionDataRestEntity("1.0.0");
@@ -26,7 +46,7 @@ public class ApiVersionDataRestEntityTest {
                 new java.net.URI("http://localhost:8080").toString()
         );
 
-        JsonApiRootObject object = new JsonApiRootObject<>(content);
+        JsonApiRestResponseWrapper object = new JsonApiRestResponseWrapper<>(content);
 
         ObjectMapper objectMapper = new ObjectMapper();
         assertEquals(objectMapper.writeValueAsString(object), "{\"data\":{\"id\":\"1.0.0\",\"type\":\"version:element\",\"attributes\":{\"version\":\"1.0.0\",\"created\":\"1970-01-01\"},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}");

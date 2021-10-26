@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -40,7 +40,7 @@ import java.util.Objects;
         description = "Entity used to return lists of taxonomy versions"
 )
 public class TaxonomyVersionCollectionDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRootObject.VERSION_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.VERSION_ELEMENT;
     public static final String VERSION_KEY = "version";
     public static final String NID_KEY = "nid";
 

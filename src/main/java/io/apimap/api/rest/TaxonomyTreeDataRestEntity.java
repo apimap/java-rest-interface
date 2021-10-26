@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -36,7 +36,7 @@ import java.util.HashMap;
         getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
 )
 public class TaxonomyTreeDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRootObject.TAXONOMY_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
     public static final String URN_KEY = "urn";
     public static final String URL_KEY = "url";
     public static final String TITLE_KEY = "title";

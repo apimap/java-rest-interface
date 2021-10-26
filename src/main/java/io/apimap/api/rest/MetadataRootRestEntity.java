@@ -20,11 +20,11 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MetadataRootRestEntity extends RootRestEntity {
-    public static final String TYPE = JsonApiRootObject.METADATA_CONTAINER;
+    public static final String TYPE = JsonApiRestResponseWrapper.METADATA_CONTAINER;
 
     public static final String VERSION = "1.0.0";
 

@@ -20,7 +20,10 @@ under the License.
 package io.apimap.api.rest.jsonapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimap.api.rest.DataRestEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -34,7 +37,7 @@ import java.util.Map;
         description = "This object is the container object used in all responses from the API."
 )
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JsonApiRootObject<T> {
+public class JsonApiRestResponseWrapper<T> {
     public static final String API_COLLECTION = "api:collection";
     public static final String API_ELEMENT = "api:element";
     public static final String TAXONOMY_COLLECTION = "taxonomy:collection";
@@ -76,16 +79,16 @@ public class JsonApiRootObject<T> {
     @Schema(description = "Contains all related entities linked with the content returned inside 'data'")
     protected ArrayList<DataRestEntity> included = new ArrayList();
 
-    public JsonApiRootObject() {
+    public JsonApiRestResponseWrapper() {
         this.jsonapi.put("version", "1.1");
     }
 
-    public JsonApiRootObject(T data) {
+    public JsonApiRestResponseWrapper(T data) {
         this.data = data;
         this.jsonapi.put("version", "1.1");
     }
 
-    public JsonApiRootObject(T data, HashMap<String, String> meta) {
+    public JsonApiRestResponseWrapper(T data, HashMap<String, String> meta) {
         this.data = data;
         this.meta = meta;
         this.jsonapi.put("version", "1.1");

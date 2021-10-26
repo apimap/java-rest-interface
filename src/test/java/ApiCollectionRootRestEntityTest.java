@@ -2,15 +2,35 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiCollectionDataRestEntity;
 import io.apimap.api.rest.ApiCollectionRootRestEntity;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ApiCollectionRootRestEntityTest {
+    @Test
+    void generateRestRequest_didSucceed(){
+        assertTrue(false);
+    }
+
+    @Test
+    void receivedRestRequest_didSucceed(){
+
+    }
+
+    @Test
+    void generatedRestResponse_didSucceed(){
+
+    }
+
+    @Test
+    void receivedRestResponse_didSucceed(){
+
+    }
     @Test
     void defaultClientServerObject_didSucceed() throws JsonProcessingException {
         ApiCollectionDataRestEntity element1 = new ApiCollectionDataRestEntity(
@@ -40,7 +60,7 @@ public class ApiCollectionRootRestEntityTest {
         object.addEntity(element2);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals(objectMapper.writeValueAsString(object), "{\"data\":[{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]}},{\"id\":\"name2\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name2\",\"codeRepository\":\"codeRepository2\",\"description\":\"description2\",\"status\":\"status2\",\"version\":\"version2\",\"documentation\":[\"url1\",\"url2\"]}}]}");
+        assertEquals("[{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]}},{\"id\":\"name2\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name2\",\"codeRepository\":\"codeRepository2\",\"description\":\"description2\",\"status\":\"status2\",\"version\":\"version2\",\"documentation\":[\"url1\",\"url2\"]}}]", objectMapper.writeValueAsString(object));
     }
 
     @Test
@@ -71,9 +91,10 @@ public class ApiCollectionRootRestEntityTest {
         content.addEntity(element1);
         content.addEntity(element2);
 
-        JsonApiRootObject object = new JsonApiRootObject<>(content);
+        JsonApiRestResponseWrapper object = new JsonApiRestResponseWrapper<>(content);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals(objectMapper.writeValueAsString(object), "{\"data\":[{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]},\"links\":{\"self\":\"http://localhost:8080\"}},{\"id\":\"name2\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name2\",\"codeRepository\":\"codeRepository2\",\"description\":\"description2\",\"status\":\"status2\",\"version\":\"version2\",\"documentation\":[\"url1\",\"url2\"]}}],\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}");
+        String a = objectMapper.writeValueAsString(object);
+        assertEquals("{\"data\":[{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]},\"links\":{\"self\":\"http://localhost:8080\"}},{\"id\":\"name2\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name2\",\"codeRepository\":\"codeRepository2\",\"description\":\"description2\",\"status\":\"status2\",\"version\":\"version2\",\"documentation\":[\"url1\",\"url2\"]}}],\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(object));
     }
 }

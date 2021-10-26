@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.apimap.api.rest.jsonapi.JsonApiRelationships;
-import io.apimap.api.rest.jsonapi.JsonApiRootObject;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -40,7 +40,7 @@ import java.util.HashMap;
         description = "Core taxonomy collection entity used to describe a taxonomy collection"
 )
 public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRootObject.TAXONOMY_ELEMENT;
+    public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
     public static final String NAME_KEY = "name";
     public static final String NID_KEY = "nid";
     public static final String DESCRIPTION_KEY = "description";

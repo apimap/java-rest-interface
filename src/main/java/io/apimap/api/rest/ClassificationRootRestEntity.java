@@ -30,8 +30,6 @@ import io.apimap.api.rest.jsonapi.JsonApiViews;
 import java.util.ArrayList;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.NAME)
-@JsonTypeName(value = "data")
 public class ClassificationRootRestEntity extends RootRestEntity {
 
     @JsonValue
