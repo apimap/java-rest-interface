@@ -1,14 +1,11 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.apimap.api.rest.ApiCollectionDataRestEntity;
-import io.apimap.api.rest.ApiCollectionRootRestEntity;
 import io.apimap.api.rest.ClassificationDataRestEntity;
 import io.apimap.api.rest.ClassificationRootRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

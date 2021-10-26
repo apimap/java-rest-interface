@@ -1,6 +1,5 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.apimap.api.rest.ApiDataRestEntity;
 import io.apimap.api.rest.ApiVersionDataRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRootObject;
 import org.junit.jupiter.api.Test;
