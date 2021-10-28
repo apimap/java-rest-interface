@@ -144,6 +144,11 @@ public class ClassificationDataRestEntity extends DataRestEntity {
         );
     }
 
+    public void setAttributes(HashMap<String, Object> attributes) {
+        this.urn = (String) attributes.getOrDefault(URN_KEY, null);
+        this.taxonomyVersion = (String) attributes.getOrDefault(TAXONOMY_VERSION_KEY, null);
+    }
+
     @JsonProperty
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
