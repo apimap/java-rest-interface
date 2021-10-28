@@ -79,6 +79,11 @@ public class JsonApiRestResponseWrapper<T> {
     @Schema(description = "Contains all related entities linked with the content returned inside 'data'")
     protected ArrayList<DataRestEntity> included = new ArrayList();
 
+    @JsonView(JsonApiViews.Default.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Schema(description = "Contains all errors in the request")
+    protected ArrayList<JsonApiError> errors = null;
+
     public JsonApiRestResponseWrapper() {
         this.jsonapi.put("version", "1.1");
     }
@@ -138,6 +143,19 @@ public class JsonApiRestResponseWrapper<T> {
         return included;
     }
 
+    public ArrayList<JsonApiError> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(ArrayList<JsonApiError> errors) {
+        this.errors = errors;
+    }
+
+    public void addErorr(JsonApiError error){
+        if(this.errors == null) this.errors = new ArrayList<>();
+        this.errors.add(error);
+    }
+
     @Schema(hidden = true)
     public void setSelf(URI uri) {
         addLink("self", uri.toString());
@@ -177,12 +195,13 @@ public class JsonApiRestResponseWrapper<T> {
 
     @Override
     public String toString() {
-        return "JsonApiRootObject{" +
+        return "JsonApiRestResponseWrapper{" +
                 "data=" + data +
                 ", links=" + links +
                 ", meta=" + meta +
                 ", jsonapi=" + jsonapi +
                 ", included=" + included +
+                ", errors=" + errors +
                 '}';
     }
 }
