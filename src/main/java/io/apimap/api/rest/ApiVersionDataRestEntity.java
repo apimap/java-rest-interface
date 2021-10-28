@@ -160,7 +160,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
         this.version = (String) attributes.getOrDefault("version", null);
     }
 
-    @JsonProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {

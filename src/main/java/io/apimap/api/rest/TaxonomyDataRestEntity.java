@@ -193,7 +193,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.uri = (String) attributes.getOrDefault("uri", null);
     }
 
-    @JsonProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, String> getLinks() {

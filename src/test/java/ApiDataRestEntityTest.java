@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiDataApiMetadataEntity;
 import io.apimap.api.rest.ApiDataRestEntity;
+import io.apimap.api.rest.DataRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRestRequestWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import org.junit.jupiter.api.Test;
@@ -13,77 +14,48 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ApiDataRestEntityTest {
-
     @Test
-    void generateRestRequest_didSucceed(){
-
-    }
-
-    @Test
-    void receivedRestRequest_didSucceed(){
-
-    }
-
-    @Test
-    void generatedRestResponse_didSucceed(){
-
-    }
-
-    @Test
-    void receivedRestResponse_didSucceed(){
-
-    }
-
-
-    @Test
-    void defaultClientServerObject_didSucceed() throws JsonProcessingException {
+    void generateRestRequest_didSucceed() throws JsonProcessingException {
         ApiDataRestEntity object = new ApiDataRestEntity("name", "codeRepository");
-
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals( "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"}}}", objectMapper.writeValueAsString(object));
+        assertEquals( "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"}}}", objectMapper.writeValueAsString(new JsonApiRestRequestWrapper<DataRestEntity>(object)));
     }
 
     @Test
-    void defaultServerClientObject_didSucceed() throws URISyntaxException, JsonProcessingException {
-        ApiDataApiMetadataEntity metadata = new ApiDataApiMetadataEntity("token");
+    void receivedRestRequest_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"}}}";
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        ApiDataRestEntity content = new ApiDataRestEntity(
-                metadata,
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestRequestWrapper.class, ApiDataRestEntity.class);
+        JsonApiRestRequestWrapper<ApiDataRestEntity> output = objectMapper.readValue(input, type);
+
+        assertEquals("name", output.getData().getName());
+        assertEquals("codeRepository", output.getData().getCodeRepository());
+    }
+
+    @Test
+    void generatedRestResponse_didSucceed() throws JsonProcessingException, URISyntaxException {
+        ApiDataRestEntity object = new ApiDataRestEntity(
+                new ApiDataApiMetadataEntity("token"),
                 "name",
                 "codeRepository",
                 new java.net.URI("http://localhost:8080").toString(),
                 null
         );
 
-        JsonApiRestResponseWrapper object = new JsonApiRestResponseWrapper<>(content);
-
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals( "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"},\"links\":{\"self\":\"http://localhost:8080\"},\"meta\":{\"token\":\"token\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(object));
+        assertEquals( "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"},\"links\":{\"self\":\"http://localhost:8080\"},\"meta\":{\"token\":\"token\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(new JsonApiRestResponseWrapper<DataRestEntity>(object)));
     }
 
     @Test
-    void deserializeString_didSucceed() throws JsonProcessingException {
-        String input = "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"API Catalog Example API\",\"codeRepository\":null}}}";
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestRequestWrapper.class, ApiDataRestEntity.class);
-        ApiDataRestEntity output = objectMapper.readValue(input, type);
-
-        assertEquals("API Catalog Example API", output.getName());
-        assertEquals("api:element", output.getType());
-    }
-
-    @Test
-    void deserializeInsideRootContainerObject_didSucceed() throws JsonProcessingException {
-        String input = "{\"data\":{\"id\":\"API Catalog Example API\",\"type\":\"api:element\",\"relationships\":{\"version:collection\":{\"links\":{\"self\":\"http://localhost:8080/api/name/version\"},\"data\":[]}},\"attributes\":{\"name\":\"API Catalog Example API\",\"codeRepository\":null},\"meta\":{\"token\":\"8d97aa91-aee4-411b-b24b-7fd6569fcddf\"}},\"links\":{\"related\":[{\"rel\":\"api:collection\",\"href\":\"http://172.17.0.1:8080/api\"},{\"rel\":\"classification:collection\",\"href\":\"http://172.17.0.1:8080/classification\"},{\"rel\":\"taxonomy:collection\",\"href\":\"http://172.17.0.1:8080/taxonomy\"}],\"self\":\"http://172.17.0.1:8080/api/API+Catalog+Example+API\"},\"meta\":{\"Copyright\":\"Copyright (c) October 20, 2021 Telenor Norway\",\"Support\":\"Any questions? Please contact us @ https://prima.corp.telenor.no/confluence/display/APIEXP\",\"OpenAPI 3\":\"http://172.17.0.1:8080/documentation/openapi3\",\"Documentation\":\"API documentation available @ https://prima.corp.telenor.no/confluence/display/APIEXP\",\"millis\":\"79\",\"Host Identifier\":\"ace6709e-d154-4619-a07f-9b117947173a\"},\"jsonapi\":{\"version\":\"1.1\"}}";
-
+    void receivedRestResponse_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\"},\"links\":{\"self\":\"http://localhost:8080\"},\"meta\":{\"token\":\"token\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}";
         ObjectMapper objectMapper = new ObjectMapper();
 
         JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestResponseWrapper.class, ApiDataRestEntity.class);
         JsonApiRestResponseWrapper<ApiDataRestEntity> output = objectMapper.readValue(input, type);
 
-        assertNotNull(output);
+        assertNotNull(output.getData());
     }
 }
 

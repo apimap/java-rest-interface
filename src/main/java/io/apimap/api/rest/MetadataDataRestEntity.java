@@ -356,7 +356,7 @@ public class MetadataDataRestEntity extends DataRestEntity {
         this.documentation = (List<String>) attributes.getOrDefault(DOCUMENTATION_KEY, Arrays.asList());
     }
 
-    @JsonProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public HashMap<String, Object> getLinks() {

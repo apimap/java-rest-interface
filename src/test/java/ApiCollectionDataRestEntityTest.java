@@ -1,37 +1,22 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiCollectionDataRestEntity;
+import io.apimap.api.rest.ApiDataApiMetadataEntity;
+import io.apimap.api.rest.ApiDataRestEntity;
+import io.apimap.api.rest.DataRestEntity;
+import io.apimap.api.rest.jsonapi.JsonApiRestRequestWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import org.junit.jupiter.api.Test;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ApiCollectionDataRestEntityTest {
     @Test
-    void generateRestRequest_didSucceed(){
-        assertTrue(false);
-    }
-
-    @Test
-    void receivedRestRequest_didSucceed(){
-
-    }
-
-    @Test
-    void generatedRestResponse_didSucceed(){
-
-    }
-
-    @Test
-    void receivedRestResponse_didSucceed(){
-
-    }
-    @Test
-    void defaultClientServerObject_didSucceed() throws JsonProcessingException {
+    void generateRestRequest_didSucceed() throws JsonProcessingException {
         ApiCollectionDataRestEntity object = new ApiCollectionDataRestEntity(
                 "name",
                 "codeRepository",
@@ -44,12 +29,27 @@ public class ApiCollectionDataRestEntityTest {
         );
 
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals("{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]}}", objectMapper.writeValueAsString(object));
+        assertEquals( "{\"data\":{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]}}}", objectMapper.writeValueAsString(new JsonApiRestRequestWrapper<ApiCollectionDataRestEntity>(object)));
     }
 
     @Test
-    void defaultServerClientObject_didSucceed() throws JsonProcessingException, URISyntaxException {
-        ApiCollectionDataRestEntity content = new ApiCollectionDataRestEntity(
+    void receivedRestRequest_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]}}}";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestRequestWrapper.class, ApiCollectionDataRestEntity.class);
+        JsonApiRestRequestWrapper<ApiCollectionDataRestEntity> output = objectMapper.readValue(input, type);
+
+        assertEquals("name", output.getData().getName());
+        assertEquals("codeRepository", output.getData().getCodeRepository());
+        assertEquals("description", output.getData().getDescription());
+        assertEquals("status", output.getData().getStatus());
+        assertEquals("version", output.getData().getVersion());
+    }
+
+    @Test
+    void generatedRestResponse_didSucceed() throws JsonProcessingException, URISyntaxException {
+        ApiCollectionDataRestEntity object = new ApiCollectionDataRestEntity(
                 "name",
                 "codeRepository",
                 "description",
@@ -60,9 +60,18 @@ public class ApiCollectionDataRestEntityTest {
                 null
         );
 
-        JsonApiRestResponseWrapper<ApiCollectionDataRestEntity> object = new JsonApiRestResponseWrapper<ApiCollectionDataRestEntity>(content);
-
         ObjectMapper objectMapper = new ObjectMapper();
-        assertEquals("{\"data\":{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(object));
+        assertEquals( "{\"data\":{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(new JsonApiRestResponseWrapper<ApiCollectionDataRestEntity>(object)));
+    }
+
+    @Test
+    void receivedRestResponse_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"id\":\"name\",\"type\":\"api:element\",\"attributes\":{\"name\":\"name\",\"codeRepository\":\"codeRepository\",\"description\":\"description\",\"status\":\"status\",\"version\":\"version\",\"documentation\":[\"url1\",\"url2\"]},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestResponseWrapper.class, ApiCollectionDataRestEntity.class);
+        JsonApiRestResponseWrapper<ApiCollectionDataRestEntity> output = objectMapper.readValue(input, type);
+
+        assertNotNull(output.getData());
     }
 }
