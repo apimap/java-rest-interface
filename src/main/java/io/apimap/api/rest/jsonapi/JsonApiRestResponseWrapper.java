@@ -20,10 +20,7 @@ under the License.
 package io.apimap.api.rest.jsonapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.apimap.api.rest.DataRestEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 
