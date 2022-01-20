@@ -44,6 +44,12 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public static final String TITLE_KEY = "title";
     public static final String URL_KEY = "url";
     public static final String DESCRIPTION_KEY = "description";
+    public static final String TYPE_KEY = "type";
+
+    public enum ReferenceType {
+        @JsonProperty("classification") CLASSIFICATION,
+        @JsonProperty("reference") REFERENCE;
+    }
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
     @JsonView(JsonApiViews.Default.class)
@@ -65,6 +71,10 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     @Schema(hidden = true)
     protected String description;
 
+    @JsonProperty(TYPE_KEY)
+    @Schema(hidden = true)
+    protected ReferenceType referenceType;
+
     @Schema(hidden = true)
     @JsonView(JsonApiViews.Default.class)
     protected String taxonomyVersion;
@@ -76,7 +86,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public TaxonomyDataRestEntity() {
     }
 
-    public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion) {
+    public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType) {
         this.urn = urn;
         this.title = title;
         this.url = url;
@@ -84,6 +94,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.id = urn;
         this.uri = uri;
         this.taxonomyVersion = taxonomyVersion;
+        this.referenceType = referenceType;
     }
 
     public String getTaxonomyVersion() {
@@ -135,6 +146,14 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.description = description;
     }
 
+    public ReferenceType getReferenceType() {
+        return referenceType;
+    }
+
+    public void setReferenceType(ReferenceType referenceType) {
+        this.referenceType = referenceType;
+    }
+
     @Schema(
             name="Taxonomy Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
@@ -156,11 +175,16 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         @JsonView(JsonApiViews.Default.class)
         protected String description;
 
-        public Attributes(String urn, String title, String url, String description) {
+        @JsonProperty(TYPE_KEY)
+        @Schema(hidden = true)
+        protected ReferenceType referenceType;
+
+        public Attributes(String urn, String title, String url, String description, ReferenceType referenceType) {
             this.urn = urn;
             this.title = title;
             this.url = url;
             this.description = description;
+            this.referenceType = referenceType;
         }
 
         @Override
@@ -170,6 +194,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
                     ", title='" + title + '\'' +
                     ", url='" + url + '\'' +
                     ", description='" + description + '\'' +
+                    ", referenceType=" + referenceType +
                     '}';
         }
     }
@@ -181,7 +206,8 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
                 urn,
                 title,
                 url,
-                description
+                description,
+                referenceType
         );
     }
 
@@ -191,6 +217,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.title = (String) attributes.getOrDefault("title", null);
         this.description = (String) attributes.getOrDefault("description", null);
         this.uri = (String) attributes.getOrDefault("uri", null);
+        this.referenceType = (ReferenceType) attributes.getOrDefault("referenceType", ReferenceType.CLASSIFICATION);
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -212,6 +239,8 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
                 ", title='" + title + '\'' +
                 ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
+                ", referenceType=" + referenceType +
+                ", taxonomyVersion='" + taxonomyVersion + '\'' +
                 ", uri='" + uri + '\'' +
                 '}';
     }
