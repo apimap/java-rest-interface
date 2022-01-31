@@ -28,6 +28,7 @@ import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.lang.ref.Reference;
 import java.util.HashMap;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -49,6 +50,18 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public enum ReferenceType {
         @JsonProperty("classification") CLASSIFICATION,
         @JsonProperty("reference") REFERENCE;
+    }
+
+    public static ReferenceType referenceTypeFromString(String type){
+        if(type.equals("classification")) return ReferenceType.CLASSIFICATION;
+        if(type.equals("reference")) return ReferenceType.REFERENCE;
+        return null;
+    }
+
+    public static String stringFromReferenceType(ReferenceType referenceType){
+        if(referenceType == ReferenceType.CLASSIFICATION) return "classification";
+        if(referenceType == ReferenceType.REFERENCE) return "reference";
+        return null;
     }
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
