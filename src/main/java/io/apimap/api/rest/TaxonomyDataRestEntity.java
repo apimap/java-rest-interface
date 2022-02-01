@@ -20,6 +20,7 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -51,8 +52,20 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     public enum ReferenceType {
-        @JsonProperty("classification") CLASSIFICATION,
-        @JsonProperty("reference") REFERENCE
+        @JsonProperty("classification")
+        CLASSIFICATION,
+
+        @JsonProperty("reference")
+        REFERENCE,
+
+        UNKNOWN;
+
+        @JsonCreator
+        static ReferenceType of(String code) {
+            if(code.equals("classification")) return CLASSIFICATION;
+            if(code.equals("reference")) return REFERENCE;
+            return UNKNOWN;
+        }
     }
 
     public static ReferenceType referenceTypeFromString(String type){
