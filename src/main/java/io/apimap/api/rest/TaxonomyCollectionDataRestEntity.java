@@ -50,16 +50,16 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
-    @JsonProperty(NAME_KEY)
     @Schema(hidden = true)
+    @JsonIgnore
     protected String name;
 
-    @JsonProperty(NID_KEY)
     @Schema(hidden = true)
+    @JsonIgnore
     protected String nid;
 
-    @JsonProperty(DESCRIPTION_KEY)
     @Schema(hidden = true)
+    @JsonIgnore
     protected String description;
 
     @JsonProperty(TOKEN_KEY)
@@ -71,7 +71,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonIgnore
     protected String uri;
 
-    @JsonIgnore
+    @Schema(hidden = true)
     protected JsonApiRelationships relationships;
 
     public TaxonomyCollectionDataRestEntity() {
@@ -149,14 +149,17 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Attributes {
         @JsonProperty(NAME_KEY)
+        @Schema(description = "Taxonomy name",example = "My First Taxonomy", required = true)
         @JsonView(JsonApiViews.Default.class)
         protected String name;
 
         @JsonProperty(NID_KEY)
+        @Schema(description = "NID identifier (alphanum) 0*30(ldh) (alphanum)",example = "apimap", required = true)
         @JsonView(JsonApiViews.Default.class)
         protected String nid;
 
         @JsonProperty(DESCRIPTION_KEY)
+        @Schema(description = "Short taxonomy description",example = "This taxonomy is used to classify My Organization APIs", required = true)
         @JsonView(JsonApiViews.Default.class)
         protected String description;
 
@@ -185,7 +188,6 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
 
     @JsonProperty
     @JsonView(JsonApiViews.Default.class)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Attributes getAttributes() {
         return new Attributes(
                 name,
@@ -193,6 +195,12 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
                 description,
                 token
         );
+    }
+
+    public void setAttributes(HashMap<String, Object> attributes) {
+        this.name = (String) attributes.getOrDefault(NAME_KEY, null);
+        this.nid = (String) attributes.getOrDefault(NID_KEY, null);
+        this.description = (String) attributes.getOrDefault(DESCRIPTION_KEY, null);
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -206,10 +214,14 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     }
 
     @JsonProperty
-    @JsonView(JsonApiViews.Collection.class)
+    @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
         return this.relationships;
+    }
+
+    public void setRelationships(JsonApiRelationships relationships) {
+        this.relationships = relationships;
     }
 
     @Override
