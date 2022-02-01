@@ -20,9 +20,11 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
@@ -47,9 +49,10 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public static final String DESCRIPTION_KEY = "description";
     public static final String TYPE_KEY = "type";
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     public enum ReferenceType {
         @JsonProperty("classification") CLASSIFICATION,
-        @JsonProperty("reference") REFERENCE;
+        @JsonProperty("reference") REFERENCE
     }
 
     public static ReferenceType referenceTypeFromString(String type){
@@ -97,6 +100,17 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     protected String uri;
 
     public TaxonomyDataRestEntity() {
+    }
+
+    public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, String referenceType) {
+        this.urn = urn;
+        this.title = title;
+        this.url = url;
+        this.description = description;
+        this.id = urn;
+        this.uri = uri;
+        this.taxonomyVersion = taxonomyVersion;
+        this.referenceType = referenceTypeFromString(referenceType);
     }
 
     public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType) {
