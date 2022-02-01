@@ -138,6 +138,11 @@ public class TaxonomyVersionCollectionDataRestEntity extends DataRestEntity {
         );
     }
 
+    public void setAttributes(HashMap<String, Object> attributes) {
+        this.version = (String) attributes.getOrDefault(VERSION_KEY, null);
+        this.nid = (String) attributes.getOrDefault(NID_KEY, null);
+    }
+
     @Schema(ref="#/components/schemas/links")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @JsonView(JsonApiViews.Collection.class)

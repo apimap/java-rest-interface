@@ -116,8 +116,8 @@ public class StatisticsDataRestEntity extends DataRestEntity {
     }
 
     public void setAttributes(HashMap<String, Object> attributes) {
-        this.value = (String) attributes.getOrDefault("value", null);
-        this.key = (String) attributes.getOrDefault("key", null);
+        this.value = (String) attributes.getOrDefault(VALUE_KEY, null);
+        this.key = (String) attributes.getOrDefault(KEY_KEY, null);
     }
 
     @Override

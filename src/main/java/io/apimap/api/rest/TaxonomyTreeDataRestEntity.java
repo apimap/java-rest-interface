@@ -39,6 +39,7 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
     public static final String URN_KEY = "urn";
     public static final String URL_KEY = "url";
+    public static final String URI_KEY = "uri";
     public static final String TITLE_KEY = "title";
     public static final String DESCRIPTION_KEY = "description";
     public static final String ENTITIES_KEY = "entities";
@@ -208,11 +209,11 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
     }
 
     public void setAttributes(HashMap<String, Object> attributes) {
-        this.urn = (String) attributes.getOrDefault("urn", null);
-        this.url = (String) attributes.getOrDefault("url", null);
-        this.title = (String) attributes.getOrDefault("title", null);
-        this.description = (String) attributes.getOrDefault("description", null);
-        this.uri = (String) attributes.getOrDefault("uri", null);
+        this.urn = (String) attributes.getOrDefault(URN_KEY, null);
+        this.url = (String) attributes.getOrDefault(URL_KEY, null);
+        this.title = (String) attributes.getOrDefault(TITLE_KEY, null);
+        this.description = (String) attributes.getOrDefault(DESCRIPTION_KEY, null);
+        this.uri = (String) attributes.getOrDefault(URI_KEY, null);
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
