@@ -217,7 +217,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         protected String description;
 
         @JsonProperty(TYPE_KEY)
-        @Schema(hidden = true)
+        @JsonView(JsonApiViews.Default.class)
         protected ReferenceType referenceType;
 
         public Attributes(String urn, String title, String url, String description, ReferenceType referenceType) {
