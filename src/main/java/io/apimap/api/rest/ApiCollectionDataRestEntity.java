@@ -51,7 +51,7 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
 
     @Schema(hidden = true)
     @JsonIgnore
-    protected ApiDataApiMetadataEntity meta;
+    protected ApiDataMetadataEntity meta;
 
     @Schema(hidden = true)
     @JsonIgnore
@@ -205,11 +205,11 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
         return links;
     }
 
-    public ApiDataApiMetadataEntity getMeta() {
+    public ApiDataMetadataEntity getMeta() {
         return meta;
     }
 
-    public void setMeta(ApiDataApiMetadataEntity meta) {
+    public void setMeta(ApiDataMetadataEntity meta) {
         this.meta = meta;
     }
 

@@ -45,6 +45,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     public static final String NID_KEY = "nid";
     public static final String DESCRIPTION_KEY = "description";
     public static final String TOKEN_KEY = "token";
+    public static final String META_KEY = "meta";
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
     @JsonView(JsonApiViews.Default.class)
@@ -62,10 +63,10 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonIgnore
     protected String description;
 
-    @JsonProperty(TOKEN_KEY)
     @Schema(hidden = true)
+    @JsonProperty(META_KEY)
     @JsonView(JsonApiViews.Extended.class)
-    protected String token;
+    protected ApiDataMetadataEntity meta;
 
     @Schema(hidden = true)
     @JsonIgnore
@@ -84,20 +85,11 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
         this.id = nid;
     }
 
-    public TaxonomyCollectionDataRestEntity(String name, String description, String nid, String token) {
-        this.name = name;
-        this.nid = nid;
-        this.description = description;
-        this.id = nid;
-        this.token = token;
-    }
-
-    public TaxonomyCollectionDataRestEntity(String name, String description, String nid, String uri, String token, JsonApiRelationships relationships) {
+    public TaxonomyCollectionDataRestEntity(String name, String description, String nid, String uri, JsonApiRelationships relationships) {
         this.name = name;
         this.nid = nid;
         this.uri = uri;
         this.id = nid;
-        this.token = token;
         this.description = description;
         this.relationships = relationships;
     }
@@ -134,12 +126,12 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
         return description;
     }
 
-    public String getToken() {
-        return token;
+    public ApiDataMetadataEntity getMeta() {
+        return meta;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setMeta(ApiDataMetadataEntity meta) {
+        this.meta = meta;
     }
 
     @Schema(
@@ -163,16 +155,10 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
         @JsonView(JsonApiViews.Default.class)
         protected String description;
 
-        @JsonProperty(TOKEN_KEY)
-        @Schema(hidden = true)
-        @JsonView(JsonApiViews.Extended.class)
-        protected String token;
-
-        public Attributes(String name, String nid, String description, String token) {
+        public Attributes(String name, String nid, String description) {
             this.name = name;
             this.nid = nid;
             this.description = description;
-            this.token = token;
         }
 
         @Override
@@ -181,7 +167,6 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
                     "name='" + name + '\'' +
                     ", nid='" + nid + '\'' +
                     ", description='" + description + '\'' +
-                    ", token='" + token + '\'' +
                     '}';
         }
     }
@@ -192,8 +177,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
         return new Attributes(
                 name,
                 nid,
-                description,
-                token
+                description
         );
     }
 
@@ -232,7 +216,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
                 ", name='" + name + '\'' +
                 ", nid='" + nid + '\'' +
                 ", description='" + description + '\'' +
-                ", token='" + token + '\'' +
+                ", meta=" + meta +
                 ", uri='" + uri + '\'' +
                 ", relationships=" + relationships +
                 '}';

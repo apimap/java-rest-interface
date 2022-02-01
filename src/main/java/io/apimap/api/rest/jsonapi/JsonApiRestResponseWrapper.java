@@ -37,6 +37,7 @@ import java.util.Map;
 public class JsonApiRestResponseWrapper<T> {
     public static final String API_COLLECTION = "api:collection";
     public static final String API_ELEMENT = "api:element";
+    public static final String API_META_ELEMENT = "apimetadata:element";
     public static final String TAXONOMY_COLLECTION = "taxonomy:collection";
     public static final String TAXONOMY_ELEMENT = "taxonomy:element";
     public static final String CLASSIFICATION_COLLECTION = "classification:collection";

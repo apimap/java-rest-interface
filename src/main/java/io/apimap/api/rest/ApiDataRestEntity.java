@@ -48,7 +48,7 @@ public class ApiDataRestEntity extends DataRestEntity{
     @Schema(hidden = true)
     @JsonProperty(META_KEY)
     @JsonView(JsonApiViews.Extended.class)
-    protected ApiDataApiMetadataEntity meta;
+    protected ApiDataMetadataEntity meta;
 
     @Schema(hidden = true)
     @JsonIgnore
@@ -90,7 +90,7 @@ public class ApiDataRestEntity extends DataRestEntity{
         this.uri = uri;
     }
 
-    public ApiDataRestEntity(ApiDataApiMetadataEntity meta, String name, String codeRepository, String uri, JsonApiRelationships relationships) {
+    public ApiDataRestEntity(ApiDataMetadataEntity meta, String name, String codeRepository, String uri, JsonApiRelationships relationships) {
         this.meta = meta;
         this.name = name;
         this.codeRepository = codeRepository;
@@ -164,11 +164,11 @@ public class ApiDataRestEntity extends DataRestEntity{
         return links;
     }
 
-    public ApiDataApiMetadataEntity getMeta() {
+    public ApiDataMetadataEntity getMeta() {
         return meta;
     }
 
-    public void setMeta(ApiDataApiMetadataEntity meta) {
+    public void setMeta(ApiDataMetadataEntity meta) {
         this.meta = meta;
     }
 

@@ -30,18 +30,18 @@ import io.apimap.api.rest.jsonapi.JsonApiViews;
 @JsonAutoDetect(
         getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
 )
-public class ApiDataApiMetadataEntity{
-    public static final String TYPE = JsonApiRestResponseWrapper.API_ELEMENT;
+public class ApiDataMetadataEntity {
+    public static final String TYPE = JsonApiRestResponseWrapper.API_META_ELEMENT;
     public static final String TOKEN_KEY = "token";
 
     @JsonView(JsonApiViews.Default.class)
     @JsonProperty(TOKEN_KEY)
     protected String token;
 
-    public ApiDataApiMetadataEntity() {
+    public ApiDataMetadataEntity() {
     }
 
-    public ApiDataApiMetadataEntity(String token) {
+    public ApiDataMetadataEntity(String token) {
         this.token = token;
     }
 
