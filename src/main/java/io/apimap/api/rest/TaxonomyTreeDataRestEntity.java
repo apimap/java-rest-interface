@@ -20,127 +20,40 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(
         getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
 )
-public class TaxonomyTreeDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
-    public static final String URN_KEY = "urn";
-    public static final String URL_KEY = "url";
-    public static final String URI_KEY = "uri";
-    public static final String TITLE_KEY = "title";
-    public static final String DESCRIPTION_KEY = "description";
+public class TaxonomyTreeDataRestEntity extends TaxonomyDataRestEntity {
     public static final String ENTITIES_KEY = "entities";
-
-    @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
-    @JsonView(JsonApiViews.Default.class)
-    protected String type = TYPE;
-
-    @JsonProperty(URN_KEY)
-    @Schema(hidden = true)
-    protected String urn;
-
-    @JsonProperty(URL_KEY)
-    @Schema(hidden = true)
-    protected String url;
-
-    @JsonProperty(TITLE_KEY)
-    @Schema(hidden = true)
-    protected String title;
-
-    @JsonProperty(DESCRIPTION_KEY)
-    @Schema(hidden = true)
-    protected String description;
 
     @JsonProperty(ENTITIES_KEY)
     @Schema(hidden = true)
     protected ArrayList<TaxonomyTreeDataRestEntity> entities = new ArrayList<>();
 
-    @Schema(hidden = true)
-    @JsonIgnore
-    protected String uri;
-
     public TaxonomyTreeDataRestEntity() {
     }
 
-    public TaxonomyTreeDataRestEntity(String urn, String url, String title, String description) {
-        this.urn = urn;
-        this.url = url;
-        this.title = title;
-        this.description = description;
-        this.id = urn;
-    }
-
-    public TaxonomyTreeDataRestEntity(String urn, String url, String title, String description, String uri) {
-        this.urn = urn;
-        this.url = url;
-        this.title = title;
-        this.description = description;
-        this.id = urn;
-        this.uri = uri;
-    }
-
-    public TaxonomyTreeDataRestEntity(String urn, String url, String title, String description, String uri, ArrayList<TaxonomyTreeDataRestEntity> entities) {
-        this.urn = urn;
-        this.url = url;
-        this.title = title;
-        this.description = description;
+    public TaxonomyTreeDataRestEntity(ArrayList<TaxonomyTreeDataRestEntity> entities) {
         this.entities = entities;
-        this.id = urn;
-        this.uri = uri;
     }
 
-    public String getUri() {
-        return uri;
+    public TaxonomyTreeDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, String referenceType, ArrayList<TaxonomyTreeDataRestEntity> entities) {
+        super(urn, title, url, description, uri, taxonomyVersion, referenceType);
+        this.entities = entities;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getUrn() {
-        return urn;
-    }
-
-    public void setUrn(String urn) {
-        this.urn = urn;
-        this.id = urn;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public TaxonomyTreeDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType, ArrayList<TaxonomyTreeDataRestEntity> entities) {
+        super(urn, title, url, description, uri, taxonomyVersion, referenceType);
+        this.entities = entities;
     }
 
     public ArrayList<TaxonomyTreeDataRestEntity> getEntities() {
@@ -155,44 +68,14 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
             name="Taxonomy Tree Item Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
-    public static class Attributes {
-        @JsonProperty(URN_KEY)
-        @JsonView(JsonApiViews.Default.class)
-        protected String urn;
-
-        @JsonProperty(URL_KEY)
-        @JsonView(JsonApiViews.Default.class)
-        protected String url;
-
-        @JsonProperty(TITLE_KEY)
-        @JsonView(JsonApiViews.Default.class)
-        protected String title;
-
-        @JsonProperty(DESCRIPTION_KEY)
-        @JsonView(JsonApiViews.Default.class)
-        protected String description;
-
+    public static class Attributes extends TaxonomyDataRestEntity.Attributes {
         @JsonProperty(ENTITIES_KEY)
         @JsonView(JsonApiViews.Default.class)
         protected ArrayList<TaxonomyTreeDataRestEntity> entities = new ArrayList<>();
 
-        public Attributes(String urn, String url, String title, String description, ArrayList<TaxonomyTreeDataRestEntity> entities) {
-            this.urn = urn;
-            this.url = url;
-            this.title = title;
-            this.description = description;
+        public Attributes(String urn, String title, String url, String description, ReferenceType referenceType, ArrayList<TaxonomyTreeDataRestEntity> entities) {
+            super(urn, title, url, description, referenceType);
             this.entities = entities;
-        }
-
-        @Override
-        public String toString() {
-            return "Attributes{" +
-                    "urn='" + urn + '\'' +
-                    ", url='" + url + '\'' +
-                    ", title='" + title + '\'' +
-                    ", description='" + description + '\'' +
-                    ", entities=" + entities +
-                    '}';
         }
     }
 
@@ -204,39 +87,24 @@ public class TaxonomyTreeDataRestEntity extends DataRestEntity {
                 url,
                 title,
                 description,
+                referenceType,
                 entities
         );
     }
 
-    public void setAttributes(HashMap<String, Object> attributes) {
-        this.urn = (String) attributes.getOrDefault(URN_KEY, null);
-        this.url = (String) attributes.getOrDefault(URL_KEY, null);
-        this.title = (String) attributes.getOrDefault(TITLE_KEY, null);
-        this.description = (String) attributes.getOrDefault(DESCRIPTION_KEY, null);
-        this.uri = (String) attributes.getOrDefault(URI_KEY, null);
-    }
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @JsonView(JsonApiViews.Collection.class)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public HashMap<String, String> getLinks() {
-        HashMap links = new HashMap();
-        links.put("self", uri);
-
-        return links;
-    }
-
     @Override
     public String toString() {
-        return "TaxonomyCollectionDataRestEntity{" +
+        return "TaxonomyTreeDataRestEntity{" +
                 "id='" + id + '\'' +
                 ", type='" + type + '\'' +
                 ", urn='" + urn + '\'' +
-                ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
                 ", description='" + description + '\'' +
-                ", entities=" + entities +
+                ", referenceType=" + referenceType +
+                ", taxonomyVersion='" + taxonomyVersion + '\'' +
                 ", uri='" + uri + '\'' +
+                ", entities=" + entities +
                 '}';
     }
 }
