@@ -53,8 +53,11 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     public enum ReferenceType {
+        @JsonProperty("classification")
         CLASSIFICATION("classification"),
+        @JsonProperty("reference")
         REFERENCE("reference"),
+        @JsonProperty("unknown")
         UNKNOWN("unknown");
 
         public final String value;
@@ -62,6 +65,11 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         @JsonCreator
         ReferenceType(String value) {
             this.value = value;
+        }
+
+        @JsonValue
+        public String getValue() {
+            return value;
         }
 
         @Override
