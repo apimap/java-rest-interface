@@ -46,11 +46,6 @@ public class TaxonomyTreeDataRestEntity extends TaxonomyDataRestEntity {
         this.entities = entities;
     }
 
-    public TaxonomyTreeDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, String referenceType, ArrayList<TaxonomyTreeDataRestEntity> entities) {
-        super(urn, title, url, description, uri, taxonomyVersion, referenceType);
-        this.entities = entities;
-    }
-
     public TaxonomyTreeDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType, ArrayList<TaxonomyTreeDataRestEntity> entities) {
         super(urn, title, url, description, uri, taxonomyVersion, referenceType);
         this.entities = entities;

@@ -82,23 +82,23 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Default.class)
     protected String type = TYPE;
 
-    @JsonProperty(URN_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String urn;
 
-    @JsonProperty(TITLE_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String title;
 
-    @JsonProperty(URL_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String url;
 
-    @JsonProperty(DESCRIPTION_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected String description;
 
-    @JsonProperty(TYPE_KEY)
+    @JsonIgnore
     @Schema(hidden = true)
     protected ReferenceType referenceType;
 
@@ -111,17 +111,6 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     protected String uri;
 
     public TaxonomyDataRestEntity() {
-    }
-
-    public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, String referenceType) {
-        this.urn = urn;
-        this.title = title;
-        this.url = url;
-        this.description = description;
-        this.id = urn;
-        this.uri = uri;
-        this.taxonomyVersion = taxonomyVersion;
-        this.referenceType = ReferenceType.valueOf(referenceType);
     }
 
     public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType) {
