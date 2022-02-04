@@ -53,32 +53,21 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     public enum ReferenceType {
-        @JsonProperty("classification")
-        CLASSIFICATION,
+        CLASSIFICATION("classification"),
+        REFERENCE("reference"),
+        UNKNOWN("unknown");
 
-        @JsonProperty("reference")
-        REFERENCE,
-
-        UNKNOWN;
+        public final String value;
 
         @JsonCreator
-        static ReferenceType of(String code) {
-            if(code.equals("classification")) return CLASSIFICATION;
-            if(code.equals("reference")) return REFERENCE;
-            return UNKNOWN;
+        ReferenceType(String value) {
+            this.value = value;
         }
-    }
 
-    public static ReferenceType referenceTypeFromString(String type){
-        if(type.equals("classification")) return ReferenceType.CLASSIFICATION;
-        if(type.equals("reference")) return ReferenceType.REFERENCE;
-        return null;
-    }
-
-    public static String stringFromReferenceType(ReferenceType referenceType){
-        if(referenceType == ReferenceType.CLASSIFICATION) return "classification";
-        if(referenceType == ReferenceType.REFERENCE) return "reference";
-        return null;
+        @Override
+        public String toString() {
+            return this.value;
+        }
     }
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
@@ -124,7 +113,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.id = urn;
         this.uri = uri;
         this.taxonomyVersion = taxonomyVersion;
-        this.referenceType = referenceTypeFromString(referenceType);
+        this.referenceType = ReferenceType.valueOf(referenceType);
     }
 
     public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType) {
@@ -258,7 +247,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.title = (String) attributes.getOrDefault(TITLE_KEY, null);
         this.description = (String) attributes.getOrDefault(DESCRIPTION_KEY, null);
         this.uri = (String) attributes.getOrDefault(URI_KEY, null);
-        this.referenceType = referenceTypeFromString((String)attributes.getOrDefault(TYPE_KEY, (Object)null));
+        this.referenceType = ReferenceType.valueOf((String)attributes.getOrDefault(TYPE_KEY, (Object)null));
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
