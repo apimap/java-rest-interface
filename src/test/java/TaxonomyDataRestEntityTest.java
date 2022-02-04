@@ -19,6 +19,7 @@ under the License.
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiVersionDataRestEntity;
 import io.apimap.api.rest.DataRestEntity;
@@ -37,7 +38,7 @@ public class TaxonomyDataRestEntityTest {
 
     @Test
     void stringToEnum_didSucceed() throws JsonProcessingException {
-        String input = "{\"data\":{\"type\":\"reference\"}}";
+        String input = "{\"data\":{\"type\":\"taxonomy:element\",\"attributes\":{\"type\":\"reference\"}}}";
         ObjectMapper objectMapper = new ObjectMapper();
 
         JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestRequestWrapper.class, TaxonomyDataRestEntity.class);

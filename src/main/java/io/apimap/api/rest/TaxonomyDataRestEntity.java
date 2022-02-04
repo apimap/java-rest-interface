@@ -74,7 +74,9 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
 
         @Override
         public String toString() {
-            return this.value;
+            return "ReferenceType{" +
+                    "value='" + value + '\'' +
+                    '}';
         }
     }
 
@@ -244,7 +246,9 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         this.title = (String) attributes.getOrDefault(TITLE_KEY, null);
         this.description = (String) attributes.getOrDefault(DESCRIPTION_KEY, null);
         this.uri = (String) attributes.getOrDefault(URI_KEY, null);
-        this.referenceType = ReferenceType.valueOf((String)attributes.getOrDefault(TYPE_KEY, (Object)null));
+
+        String type = ((String)attributes.getOrDefault(TYPE_KEY, (Object)null));
+        this.referenceType = ReferenceType.valueOf(type != null ? type.toUpperCase() : null);
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
