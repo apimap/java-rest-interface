@@ -43,7 +43,7 @@ import java.util.HashMap;
         description = "Core taxonomy entity used to describe an taxonomy entity"
 )
 public class TaxonomyDataRestEntity extends DataRestEntity {
-    public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
+    public final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
     public static final String URN_KEY = "urn";
     public static final String TITLE_KEY = "title";
     public static final String URL_KEY = "url";
