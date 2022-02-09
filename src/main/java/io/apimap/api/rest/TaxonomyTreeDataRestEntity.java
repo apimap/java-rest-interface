@@ -86,8 +86,8 @@ public class TaxonomyTreeDataRestEntity extends TaxonomyDataRestEntity {
     public Attributes getAttributes() {
         return new Attributes(
                 urn,
-                url,
                 title,
+                url,
                 description,
                 referenceType,
                 entities
