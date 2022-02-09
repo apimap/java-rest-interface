@@ -43,7 +43,7 @@ import java.util.HashMap;
         description = "Core taxonomy entity used to describe an taxonomy entity"
 )
 public class TaxonomyDataRestEntity extends DataRestEntity {
-    public final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
+
     public static final String URN_KEY = "urn";
     public static final String TITLE_KEY = "title";
     public static final String URL_KEY = "url";
@@ -80,9 +80,9 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         }
     }
 
-    @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
+    @Schema(description = "Object type definition", defaultValue = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT, required = true)
     @JsonView(JsonApiViews.Default.class)
-    protected String type = TYPE;
+    protected String type = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
 
     @JsonIgnore
     @Schema(hidden = true)

@@ -17,11 +17,49 @@ specific language governing permissions and limitations
 under the License.
  */
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.apimap.api.rest.TaxonomyDataRestEntity;
+import io.apimap.api.rest.TaxonomyTreeDataRestEntity;
+import io.apimap.api.rest.jsonapi.JsonApiRestRequestWrapper;
+import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaxonomyTreeDataRestEntityTest {
+
+    @Test
+    void stringToEnum_didSucceed() throws JsonProcessingException {
+        String input = "{\"data\":{\"type\":\"urn:element\",\"attributes\":{\"type\":\"reference\"}}}";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(JsonApiRestRequestWrapper.class, TaxonomyDataRestEntity.class);
+        JsonApiRestRequestWrapper<TaxonomyDataRestEntity> output = objectMapper.readValue(input, type);
+
+        assertSame(output.getData().getReferenceType(), TaxonomyTreeDataRestEntity.ReferenceType.REFERENCE);
+    }
+
+    @Test
+    void enumToString_didSucceed() throws JsonProcessingException {
+        TaxonomyTreeDataRestEntity object = new TaxonomyTreeDataRestEntity(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                TaxonomyDataRestEntity.ReferenceType.REFERENCE,
+                null
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        assertEquals( "{\"data\":{\"type\":\"urn:element\",\"attributes\":{\"urn\":null,\"title\":null,\"url\":null,\"description\":null,\"type\":\"reference\",\"entities\":null},\"links\":{\"self\":null}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(new JsonApiRestResponseWrapper<TaxonomyDataRestEntity>(object)));
+    }
+
     @Test
     void generateRestRequest_didSucceed(){
         assertTrue(true); // TODO

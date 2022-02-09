@@ -20,6 +20,7 @@ under the License.
 package io.apimap.api.rest;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -34,9 +35,12 @@ import java.util.ArrayList;
         getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY
 )
 public class TaxonomyTreeDataRestEntity extends TaxonomyDataRestEntity {
-    public static final String TYPE = JsonApiRestResponseWrapper.URN_ELEMENT;
 
     public static final String ENTITIES_KEY = "entities";
+
+    @Schema(description = "Object type definition", defaultValue = JsonApiRestResponseWrapper.URN_ELEMENT, required = true)
+    @JsonView(JsonApiViews.Default.class)
+    protected String type = JsonApiRestResponseWrapper.URN_ELEMENT;
 
     @JsonProperty(ENTITIES_KEY)
     @Schema(hidden = true)
