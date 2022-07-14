@@ -55,6 +55,8 @@ public class JsonApiRestResponseWrapper<T> {
     public static final String STATISTICS_ENTRY = "statistics:entry";
     public static final String MESH_COLLECTION = "mesh:collection";
     public static final String MESH_ELEMENT = "mesh:element";
+    public static final String README_ELEMENT = "readme:element";
+    public static final String CHANGELOG_ELEMENT = "changelog:element";
 
     @Schema(description = "Resource/collection main object")
     @JsonView(JsonApiViews.Default.class)
