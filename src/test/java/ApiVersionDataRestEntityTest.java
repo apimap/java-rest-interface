@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.apimap.api.rest.ApiVersionDataRestEntity;
+import io.apimap.api.rest.ApiVersionRatingEntity;
 import io.apimap.api.rest.DataRestEntity;
 import io.apimap.api.rest.jsonapi.JsonApiRestRequestWrapper;
 import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
@@ -60,6 +61,19 @@ public class ApiVersionDataRestEntityTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         assertEquals( "{\"data\":{\"id\":\"1.0.0\",\"type\":\"version:element\",\"attributes\":{\"version\":\"1.0.0\",\"created\":\"1970-01-01\"},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(new JsonApiRestResponseWrapper<DataRestEntity>(object)));
+    }
+
+    @Test
+    void generatedRestResponseWithRating_didSucceed() throws URISyntaxException, JsonProcessingException {
+        ApiVersionDataRestEntity object = new ApiVersionDataRestEntity(
+                "1.0.0",
+                new Date(1),
+                new ApiVersionRatingEntity(2),
+                new java.net.URI("http://localhost:8080").toString()
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        assertEquals( "{\"data\":{\"id\":\"1.0.0\",\"type\":\"version:element\",\"attributes\":{\"version\":\"1.0.0\",\"created\":\"1970-01-01\",\"rating\":{\"documentation\":2}},\"links\":{\"self\":\"http://localhost:8080\"}},\"links\":{},\"meta\":{},\"jsonapi\":{\"version\":\"1.1\"}}", objectMapper.writeValueAsString(new JsonApiRestResponseWrapper<DataRestEntity>(object)));
     }
 
     @Test

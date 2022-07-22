@@ -85,7 +85,6 @@ public class ApiDataRestEntity extends DataRestEntity{
         this.name = name;
         this.codeRepository = codeRepository;
         this.relationships = relationships;
-
         this.id = name;
         this.uri = uri;
     }
@@ -95,6 +94,15 @@ public class ApiDataRestEntity extends DataRestEntity{
         this.name = name;
         this.codeRepository = codeRepository;
         this.uri = uri;
+        this.relationships = relationships;
+    }
+
+    public ApiDataRestEntity(ApiDataMetadataEntity meta, String name, String codeRepository, String uri, String type, JsonApiRelationships relationships) {
+        this.meta = meta;
+        this.name = name;
+        this.codeRepository = codeRepository;
+        this.uri = uri;
+        this.type = type;
         this.relationships = relationships;
     }
 

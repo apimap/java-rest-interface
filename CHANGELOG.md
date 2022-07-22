@@ -1,6 +1,9 @@
 Changelog
 ===
 
+### 19.07.2022
+- Added Vote entities with rating value
+
 ### 14.07.2022
 - Updated dependencies
 - Added readme and changelog types

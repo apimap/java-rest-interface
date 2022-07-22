@@ -45,6 +45,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
 
     public static final String VERSION_KEY = "version";
     public static final String CREATED_KEY = "created";
+    public static final String RATING_KEY = "rating";
 
     @Schema(hidden = true)
     @JsonIgnore
@@ -53,6 +54,10 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     @Schema(hidden = true)
     @JsonIgnore
     protected Date created;
+
+    @Schema(hidden = true)
+    @JsonIgnore
+    protected ApiVersionRatingEntity rating;
 
     @Schema(description = "Object type definition", defaultValue = TYPE, required = true)
     @JsonView(JsonApiViews.Default.class)
@@ -71,6 +76,14 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     public ApiVersionDataRestEntity(String version, Date created, String uri) {
         this.version = version;
         this.created = created;
+        this.uri = uri;
+        this.id = version;
+    }
+
+    public ApiVersionDataRestEntity(String version, Date created, ApiVersionRatingEntity rating, String uri) {
+        this.version = version;
+        this.created = created;
+        this.rating = rating;
         this.uri = uri;
         this.id = version;
     }
@@ -132,9 +145,21 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
         @Schema(description = "Date created", required = false)
         protected Date created;
 
+        @JsonView(JsonApiViews.Default.class)
+        @JsonProperty(RATING_KEY)
+        @Schema(description = "Rating", required = false)
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        protected ApiVersionRatingEntity rating;
+
         public Attributes(String version, Date created) {
             this.version = version;
             this.created = created;
+        }
+
+        public Attributes(String version, Date created, ApiVersionRatingEntity rating) {
+            this.version = version;
+            this.created = created;
+            this.rating = rating;
         }
 
         @Override
@@ -142,6 +167,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
             return "Attributes{" +
                     "version='" + version + '\'' +
                     ", created=" + created +
+                    ", rating=" + rating +
                     '}';
         }
     }
@@ -152,7 +178,8 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     public Attributes getAttributes() {
         return new Attributes(
                 version,
-                created
+                created,
+                rating
         );
     }
 
@@ -177,8 +204,10 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
         return "ApiVersionDataRestEntity{" +
                 "version='" + version + '\'' +
                 ", created=" + created +
-                ", id='" + id + '\'' +
+                ", rating=" + rating +
                 ", type='" + type + '\'' +
+                ", uri='" + uri + '\'' +
+                ", id='" + id + '\'' +
                 '}';
     }
 }
