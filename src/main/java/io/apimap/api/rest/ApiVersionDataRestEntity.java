@@ -1,32 +1,25 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -40,6 +33,7 @@ import java.util.HashMap;
         name="API Version",
         description = "Core version entity used to describe an API version"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class ApiVersionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.VERSION_ELEMENT;
 
@@ -69,31 +63,52 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     public ApiVersionDataRestEntity() {
     }
 
-    public ApiVersionDataRestEntity(String version) {
+    public ApiVersionDataRestEntity(final String version) {
+        super(version);
+
         this.version = version;
     }
 
-    public ApiVersionDataRestEntity(String version, Date created, String uri) {
+    public ApiVersionDataRestEntity(final String version,
+                                    final Date created,
+                                    final String uri) {
+        super(version);
+
         this.version = version;
-        this.created = created;
+        this.created = created != null ? (Date)created.clone() : null;
         this.uri = uri;
-        this.id = version;
     }
 
-    public ApiVersionDataRestEntity(String version, Date created, ApiVersionRatingEntity rating, String uri) {
+    public ApiVersionDataRestEntity(final String version,
+                                    final Date created,
+                                    final ApiVersionRatingEntity rating,
+                                    final String uri) {
+        super(version);
+
         this.version = version;
-        this.created = created;
-        this.rating = rating;
+        this.created = created != null ? (Date)created.clone() : null;
+        this.rating = rating != null ? (ApiVersionRatingEntity) rating.clone() : null;
         this.uri = uri;
-        this.id = version;
+    }
+
+    @Override
+    public Object clone() {
+        ApiVersionDataRestEntity returnValue = (ApiVersionDataRestEntity) super.clone();
+
+        returnValue.version = this.version;
+        returnValue.created = this.created;
+        returnValue.rating = rating != null ? (ApiVersionRatingEntity) this.rating.clone() : null;
+        returnValue.uri = this.uri;
+
+        return returnValue;
     }
 
     public Date getCreated() {
-        return created;
+        return created != null ? (Date)created.clone() : null;
     }
 
     public void setCreated(Date created) {
-        this.created = created;
+        this.created = created != null ? (Date)created.clone() : null;
     }
 
     public String getVersion() {
@@ -133,7 +148,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
             name="API Version Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
-    public static class Attributes {
+    public static class Attributes implements Cloneable{
         @JsonProperty(VERSION_KEY)
         @Schema(description = "URL to the main API code repository",example = "http//github/helloworld", required = false)
         @JsonView(JsonApiViews.Default.class)
@@ -151,15 +166,38 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
         @JsonInclude(JsonInclude.Include.NON_EMPTY)
         protected ApiVersionRatingEntity rating;
 
-        public Attributes(String version, Date created) {
-            this.version = version;
-            this.created = created;
+        public Attributes() {
         }
 
-        public Attributes(String version, Date created, ApiVersionRatingEntity rating) {
+        public Attributes(final String version,
+                          final Date created) {
             this.version = version;
-            this.created = created;
-            this.rating = rating;
+            this.created = created != null ? (Date)created.clone() : null;
+        }
+
+        public Attributes(final String version,
+                          final Date created,
+                          final ApiVersionRatingEntity rating) {
+            this.version = version;
+            this.created = created != null ? (Date)created.clone() : null;
+            this.rating = rating != null ? (ApiVersionRatingEntity) rating.clone() : null;
+        }
+
+        @Override
+        public Object clone() {
+            Attributes returnValue = null;
+
+            try {
+                returnValue = (Attributes) super.clone();
+            } catch (CloneNotSupportedException e) {
+                returnValue = new Attributes();
+            }
+
+            returnValue.version = this.version;
+            returnValue.created = this.created;
+            returnValue.rating = this.rating != null ? (ApiVersionRatingEntity)this.rating.clone() : null;
+
+            return returnValue;
         }
 
         @Override
@@ -184,7 +222,7 @@ public class ApiVersionDataRestEntity extends DataRestEntity {
     }
 
     public void setAttributes(HashMap<String, Object> attributes) {
-        this.version = (String) attributes.getOrDefault("version", null);
+        this.version = (String) attributes.getOrDefault(VERSION_KEY, null);
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

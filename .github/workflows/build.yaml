@@ -14,5 +14,6 @@ jobs:
         with:
           java-version: '16'
           distribution: 'zulu'
+          cache: 'gradle'
       - name: Build
         run: ./gradlew build

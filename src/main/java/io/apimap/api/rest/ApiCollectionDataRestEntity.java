@@ -1,34 +1,29 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRelationships;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRelationships;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +35,7 @@ import java.util.List;
     name="API Collection Item",
     description = "Entity used to return lists of APIs"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class ApiCollectionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.API_ELEMENT;
     public static final String NAME_KEY = "name";
@@ -92,16 +88,23 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     public ApiCollectionDataRestEntity() {
     }
 
-    public ApiCollectionDataRestEntity(String name, String codeRepository, String description, String status, String version, List<String> documentation, String uri, JsonApiRelationships relationships) {
+    public ApiCollectionDataRestEntity(final String name,
+                                       final String codeRepository,
+                                       final String description,
+                                       final String status,
+                                       final String version,
+                                       final List<String> documentation,
+                                       final String uri,
+                                       final JsonApiRelationships relationships) {
+        super(name);
+
         this.name = name;
         this.codeRepository = codeRepository;
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
         this.description = description;
         this.status = status;
         this.version = version;
-        this.documentation = documentation;
-
-        this.id = name;
+        this.documentation = new ArrayList<>(documentation);
         this.uri = uri;
     }
 
@@ -109,7 +112,7 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
             name="API Collection Item Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
-    public static class Attributes {
+    public static class Attributes implements Cloneable{
         @Schema(description = "API name", example = "Hello World", required = true)
         @JsonProperty(NAME_KEY)
         @JsonView(JsonApiViews.Default.class)
@@ -140,13 +143,41 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
         @JsonView(JsonApiViews.Default.class)
         protected List<String> documentation;
 
-        public Attributes(String name, String codeRepository, String description, String status, String version, List<String> documentation) {
+        public Attributes() {
+        }
+
+        public Attributes(final String name,
+                          final String codeRepository,
+                          final String description,
+                          final String status,
+                          final String version,
+                          final List<String> documentation) {
             this.name = name;
             this.codeRepository = codeRepository;
             this.description = description;
             this.status = status;
             this.version = version;
-            this.documentation = documentation;
+            this.documentation = new ArrayList<>(documentation);
+        }
+
+        @Override
+        public Object clone() {
+            Attributes returnValue = null;
+
+            try {
+                returnValue = (Attributes) super.clone();
+            } catch (CloneNotSupportedException e) {
+                returnValue = new Attributes();
+            }
+
+            returnValue.name = this.name;
+            returnValue.codeRepository = this.codeRepository;
+            returnValue.description = this.description;
+            returnValue.status = this.status;
+            returnValue.version = this.version;
+            returnValue.documentation = new ArrayList<>(this.documentation);
+
+            return returnValue;
         }
 
         @Override
@@ -189,7 +220,7 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
-        return this.relationships;
+        return relationships != null ? (JsonApiRelationships) this.relationships.clone() : null;
     }
 
     @Schema(ref="#/components/schemas/Links")
@@ -206,11 +237,11 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     }
 
     public ApiDataMetadataEntity getMeta() {
-        return meta;
+        return meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     public void setMeta(ApiDataMetadataEntity meta) {
-        this.meta = meta;
+        this.meta = meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     public String getId() {
@@ -271,11 +302,11 @@ public class ApiCollectionDataRestEntity extends DataRestEntity {
     }
 
     public List<String> getDocumentation() {
-        return documentation;
+        return new ArrayList<>(documentation);
     }
 
     public void setDocumentation(List<String> documentation) {
-        this.documentation = documentation;
+        this.documentation = new ArrayList<>(documentation);
     }
 
     @Override

@@ -1,32 +1,26 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRelationships;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRelationships;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.HashMap;
@@ -39,7 +33,9 @@ import java.util.HashMap;
         name="API",
         description = "Core API entity used to describe an API"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class ApiDataRestEntity extends DataRestEntity{
+
     public static final String TYPE = JsonApiRestResponseWrapper.API_ELEMENT;
     public static final String META_KEY = "meta";
     public static final String NAME_KEY = "name";
@@ -72,45 +68,67 @@ public class ApiDataRestEntity extends DataRestEntity{
     public ApiDataRestEntity() {
     }
 
-    public ApiDataRestEntity(String name) {
+    public ApiDataRestEntity(final String name) {
+        super(name);
+
         this.name = name;
     }
 
-    public ApiDataRestEntity(String name, String codeRepository) {
+    public ApiDataRestEntity(final String name,
+                             final String codeRepository) {
+        super(name);
+
         this.name = name;
         this.codeRepository = codeRepository;
     }
 
-    public ApiDataRestEntity(String name, String codeRepository, String uri, JsonApiRelationships relationships) {
+    public ApiDataRestEntity(final String name,
+                             final String codeRepository,
+                             final String uri,
+                             final JsonApiRelationships relationships) {
+        super(name);
+
         this.name = name;
         this.codeRepository = codeRepository;
-        this.relationships = relationships;
-        this.id = name;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
         this.uri = uri;
     }
 
-    public ApiDataRestEntity(ApiDataMetadataEntity meta, String name, String codeRepository, String uri, JsonApiRelationships relationships) {
-        this.meta = meta;
+    public ApiDataRestEntity(final ApiDataMetadataEntity meta,
+                             final String name,
+                             final String codeRepository,
+                             final String uri,
+                             final JsonApiRelationships relationships) {
+        super(name);
+
+        this.meta = meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
         this.name = name;
         this.codeRepository = codeRepository;
         this.uri = uri;
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
-    public ApiDataRestEntity(ApiDataMetadataEntity meta, String name, String codeRepository, String uri, String type, JsonApiRelationships relationships) {
-        this.meta = meta;
+    public ApiDataRestEntity(final ApiDataMetadataEntity meta,
+                             final String name,
+                             final String codeRepository,
+                             final String uri,
+                             final String type,
+                             final JsonApiRelationships relationships) {
+        super(name);
+
+        this.meta = meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
         this.name = name;
         this.codeRepository = codeRepository;
         this.uri = uri;
         this.type = type;
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     @Schema(
             name="API Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
-    public static class Attributes {
+    public static class Attributes implements Cloneable {
         @JsonProperty(NAME_KEY)
         @Schema(description = "API name",example = "Hello World", required = true)
         @JsonView(JsonApiViews.Default.class)
@@ -121,9 +139,28 @@ public class ApiDataRestEntity extends DataRestEntity{
         @JsonView(JsonApiViews.Default.class)
         protected String codeRepository;
 
+        public Attributes() {
+        }
+
         public Attributes(String name, String codeRepository) {
             this.name = name;
             this.codeRepository = codeRepository;
+        }
+
+        @Override
+        public Object clone() {
+            Attributes returnValue = null;
+
+            try {
+                returnValue = (Attributes) super.clone();
+            } catch (CloneNotSupportedException e) {
+                returnValue = new Attributes();
+            }
+
+            returnValue.name = this.name;
+            returnValue.codeRepository = this.codeRepository;
+
+            return returnValue;
         }
 
         @Override
@@ -153,11 +190,11 @@ public class ApiDataRestEntity extends DataRestEntity{
     @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
-        return this.relationships;
+        return relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     public void setRelationships(JsonApiRelationships relationships) {
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -173,11 +210,11 @@ public class ApiDataRestEntity extends DataRestEntity{
     }
 
     public ApiDataMetadataEntity getMeta() {
-        return meta;
+        return meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     public void setMeta(ApiDataMetadataEntity meta) {
-        this.meta = meta;
+        this.meta = meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     public String getId() {

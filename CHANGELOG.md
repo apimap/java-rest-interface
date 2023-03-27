@@ -1,6 +1,14 @@
 Changelog
 ===
 
+### 27.03.2023
+- Added Orchestra entities
+- Added Oauth entities
+- Class cleanup and renaming
+- Fixed spotbugs errors
+- All objects are now copied before assigning
+- Added semantic release versioning
+
 ### 19.07.2022
 - Added Vote entities with rating value
 

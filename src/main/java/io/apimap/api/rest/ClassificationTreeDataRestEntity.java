@@ -1,32 +1,26 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRelationships;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRelationships;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
@@ -40,6 +34,7 @@ import java.util.HashMap;
         name="Classification Tree Item Attributes",
         description = "Classification tree item used to list the taxonomy relations"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class ClassificationTreeDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.CLASSIFICATION_TREE;
     public static final String PATH_KEY = "path";
@@ -71,20 +66,28 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     public ClassificationTreeDataRestEntity() {
     }
 
-    public ClassificationTreeDataRestEntity(String urn, String title, ArrayList<String> path) {
+    public ClassificationTreeDataRestEntity(final String urn,
+                                            final String title,
+                                            final ArrayList<String> path) {
+        super(urn);
+
         this.urn = urn;
-        this.id = urn;
         this.title = title;
-        this.path = path;
+        this.path = new ArrayList<>(path);
     }
 
-    public ClassificationTreeDataRestEntity(String urn, String title, String uri, ArrayList<String> path, JsonApiRelationships relationships) {
+    public ClassificationTreeDataRestEntity(final String urn,
+                                            final String title,
+                                            final String uri,
+                                            final ArrayList<String> path,
+                                            final JsonApiRelationships relationships) {
+        super(urn);
+
         this.urn = urn;
-        this.id = urn;
         this.title = title;
-        this.path = path;
+        this.path = new ArrayList<>(path);
         this.uri = uri;
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     public String getUrn() {
@@ -104,7 +107,7 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     }
 
     public ArrayList<String> getPath() {
-        return path;
+        return new ArrayList<>(path);
     }
 
     @Schema(
@@ -125,7 +128,7 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
         protected String title;
 
         public Attributes(ArrayList<String> path, String urn, String title) {
-            this.path = path;
+            this.path = new ArrayList<>(path);
             this.urn = urn;
             this.title = title;
         }
@@ -154,7 +157,7 @@ public class ClassificationTreeDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Collection.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
-        return this.relationships;
+        return relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

@@ -1,37 +1,27 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.lang.ref.Reference;
 import java.util.HashMap;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -42,6 +32,7 @@ import java.util.HashMap;
         name="Taxonomy",
         description = "Core taxonomy entity used to describe an taxonomy entity"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class TaxonomyDataRestEntity extends DataRestEntity {
 
     public static final String URN_KEY = "urn";
@@ -115,12 +106,19 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
     public TaxonomyDataRestEntity() {
     }
 
-    public TaxonomyDataRestEntity(String urn, String title, String url, String description, String uri, String taxonomyVersion, ReferenceType referenceType) {
+    public TaxonomyDataRestEntity(final String urn,
+                                  final String title,
+                                  final String url,
+                                  final String description,
+                                  final String uri,
+                                  final String taxonomyVersion,
+                                  final ReferenceType referenceType) {
+        super(urn);
+
         this.urn = urn;
         this.title = title;
         this.url = url;
         this.description = description;
-        this.id = urn;
         this.uri = uri;
         this.taxonomyVersion = taxonomyVersion;
         this.referenceType = referenceType;
@@ -187,7 +185,7 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
             name="Taxonomy Attributes",
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
-    public static class Attributes {
+    public static class Attributes implements Cloneable {
         @JsonProperty(URN_KEY)
         @JsonView(JsonApiViews.Default.class)
         protected String urn;
@@ -208,12 +206,38 @@ public class TaxonomyDataRestEntity extends DataRestEntity {
         @JsonView(JsonApiViews.Default.class)
         protected ReferenceType referenceType;
 
-        public Attributes(String urn, String title, String url, String description, ReferenceType referenceType) {
+        public Attributes() {
+        }
+
+        public Attributes(final String urn,
+                          final String title,
+                          final String url,
+                          final String description,
+                          final ReferenceType referenceType) {
             this.urn = urn;
             this.title = title;
             this.url = url;
             this.description = description;
             this.referenceType = referenceType;
+        }
+
+        @Override
+        public Object clone() {
+            Attributes returnValue = null;
+
+            try {
+                returnValue = (Attributes) super.clone();
+            } catch (CloneNotSupportedException e) {
+                returnValue = new Attributes();
+            }
+
+            returnValue.urn = this.urn;
+            returnValue.title = this.title;
+            returnValue.url = this.url;
+            returnValue.description = this.description;
+            returnValue.referenceType = this.referenceType;
+
+            return returnValue;
         }
 
         @Override

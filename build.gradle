@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'com.github.spotbugs' version '5.0.14'
+    id 'de.gliderpilot.semantic-release' version '1.4.2'
 }
 
 group 'io.apimap.api'
@@ -10,11 +12,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
-    implementation 'io.swagger.core.v3:swagger-annotations:2.2.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.8'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.7.3'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
 publishing {
@@ -32,6 +35,15 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+semanticRelease {
+    releaseBranches {
+        include 'master'
+    }
+    repo {
+        ghToken = System.getenv('GITHUB_TOKEN')
     }
 }
 

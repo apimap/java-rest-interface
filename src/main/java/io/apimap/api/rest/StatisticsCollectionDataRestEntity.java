@@ -1,31 +1,25 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.HashMap;
@@ -37,6 +31,7 @@ import java.util.HashMap;
 @Schema(
         name="Statistics Collection Item"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class StatisticsCollectionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.STATISTICS_ELEMENT;
     public static final String DESCRIPTION_KEY = "description";
@@ -56,13 +51,18 @@ public class StatisticsCollectionDataRestEntity extends DataRestEntity {
     public StatisticsCollectionDataRestEntity() {
     }
 
-    public StatisticsCollectionDataRestEntity(String id, String description) {
-        this.id = id;
+    public StatisticsCollectionDataRestEntity(final String id,
+                                              final String description) {
+        super(id);
+
         this.description = description;
     }
 
-    public StatisticsCollectionDataRestEntity(String id, String description, String uri) {
-        this.id = id;
+    public StatisticsCollectionDataRestEntity(final String id,
+                                              final String description,
+                                              final String uri) {
+        super(id);
+
         this.description = description;
         this.uri = uri;
     }

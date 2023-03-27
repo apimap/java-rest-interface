@@ -1,32 +1,26 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
 package io.apimap.api.rest;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import io.apimap.api.rest.jsonapi.JsonApiRelationships;
-import io.apimap.api.rest.jsonapi.JsonApiRestResponseWrapper;
-import io.apimap.api.rest.jsonapi.JsonApiViews;
+import com.fasterxml.jackson.annotation.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.apimap.rest.jsonapi.JsonApiRelationships;
+import io.apimap.rest.jsonapi.JsonApiRestResponseWrapper;
+import io.apimap.rest.jsonapi.JsonApiViews;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.HashMap;
@@ -39,6 +33,7 @@ import java.util.HashMap;
         name="Taxonomy Collection",
         description = "Core taxonomy collection entity used to describe a taxonomy collection"
 )
+@SuppressFBWarnings(value = "EQ_DOESNT_OVERRIDE_EQUALS")
 public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     public static final String TYPE = JsonApiRestResponseWrapper.TAXONOMY_ELEMENT;
     public static final String NAME_KEY = "name";
@@ -78,20 +73,28 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     public TaxonomyCollectionDataRestEntity() {
     }
 
-    public TaxonomyCollectionDataRestEntity(String name, String description, String nid) {
+    public TaxonomyCollectionDataRestEntity(final String name,
+                                            final String description,
+                                            final String nid) {
+        super(nid);
+
         this.name = name;
         this.nid = nid;
         this.description = description;
-        this.id = nid;
     }
 
-    public TaxonomyCollectionDataRestEntity(String name, String description, String nid, String uri, JsonApiRelationships relationships) {
+    public TaxonomyCollectionDataRestEntity(final String name,
+                                            final String description,
+                                            final String nid,
+                                            final String uri,
+                                            final JsonApiRelationships relationships) {
+        super(nid);
+
         this.name = name;
         this.nid = nid;
         this.uri = uri;
-        this.id = nid;
         this.description = description;
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     public static String getTYPE() {
@@ -127,11 +130,11 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     }
 
     public ApiDataMetadataEntity getMeta() {
-        return meta;
+        return meta != null ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     public void setMeta(ApiDataMetadataEntity meta) {
-        this.meta = meta;
+        this.meta = (meta != null) ? (ApiDataMetadataEntity) meta.clone() : null;
     }
 
     @Schema(
@@ -139,7 +142,7 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
             description = "Object attributes. This object must be used when doing a POST or PUT"
     )
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class Attributes {
+    public static class Attributes implements Cloneable{
         @JsonProperty(NAME_KEY)
         @Schema(description = "Taxonomy name",example = "My First Taxonomy", required = true)
         @JsonView(JsonApiViews.Default.class)
@@ -155,10 +158,30 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
         @JsonView(JsonApiViews.Default.class)
         protected String description;
 
+        public Attributes() {
+        }
+
         public Attributes(String name, String nid, String description) {
             this.name = name;
             this.nid = nid;
             this.description = description;
+        }
+
+        @Override
+        public Object clone() {
+            Attributes returnValue = null;
+
+            try {
+                returnValue = (Attributes) super.clone();
+            } catch (CloneNotSupportedException e) {
+                returnValue = new Attributes();
+            }
+
+            returnValue.name = this.name;
+            returnValue.nid = this.nid;
+            returnValue.description = this.description;
+
+            return returnValue;
         }
 
         @Override
@@ -201,11 +224,11 @@ public class TaxonomyCollectionDataRestEntity extends DataRestEntity {
     @JsonView(JsonApiViews.Default.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public JsonApiRelationships getRelationships() {
-        return this.relationships;
+        return relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     public void setRelationships(JsonApiRelationships relationships) {
-        this.relationships = relationships;
+        this.relationships = relationships != null ? (JsonApiRelationships) relationships.clone() : null;
     }
 
     @Override

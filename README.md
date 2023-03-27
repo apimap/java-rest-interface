@@ -31,7 +31,9 @@ find useful, create the rest to custom fit your organization.
 - A **Developer Portal** with wizards and implementation information
 - A **Discovery Portal** to display APIs and filter search results
 - An **API** to accommodate all the information
+- An **Orchestra API** to manage accounts and resource access
 - A **Jenkins plugin** to automate information parsing and upload
+- A **GitHub Action** to automate information parsing and upload
 - A **CLI** to enable manual information uploads
 
 ## Build and Run

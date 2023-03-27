@@ -1,23 +1,20 @@
 /*
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
+Copyright 2021-2023 TELENOR NORGE AS
 
-  http://www.apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
  */
 
-package io.apimap.api.rest.jsonapi;
+package io.apimap.rest.jsonapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -59,6 +56,13 @@ public class JsonApiRestResponseWrapper<T> {
     public static final String CHANGELOG_ELEMENT = "changelog:element";
     public static final String VOTE_COLLECTION = "vote:collection";
     public static final String VOTE_ELEMENT = "vote:element";
+    public static final String ACCESS_TOKEN_ELEMENT = "access-token:element";
+    public static final String ACCESS_TOKEN_COLLECTION = "access-token:collection";
+    public static final String ACCESS_TOKEN_VALIDITY_ELEMENT = "access-token-validity:element";
+    public static final String ORGANIZATION_COLLECTION = "organization:collection";
+    public static final String ORGANIZATION_ELEMENT = "organization:element";
+    public static final String ACCOUNT_COLLECTION = "account:collection";
+    public static final String ACCOUNT_ELEMENT = "account:element";
 
     @Schema(description = "Resource/collection main object")
     @JsonView(JsonApiViews.Default.class)
@@ -97,12 +101,12 @@ public class JsonApiRestResponseWrapper<T> {
 
     public JsonApiRestResponseWrapper(T data, HashMap<String, String> meta) {
         this.data = data;
-        this.meta = meta;
+        this.meta = new HashMap<>(meta);
         this.jsonapi.put("version", "1.1");
     }
 
     public Map<String, String> getMeta() {
-        return meta;
+        return new HashMap<>(meta);
     }
 
     public void addMetadata(String key, String value) {
@@ -118,23 +122,23 @@ public class JsonApiRestResponseWrapper<T> {
     }
 
     public void setLinks(HashMap<String, Object> links) {
-        this.links = links;
+        this.links = new HashMap<>(links);
     }
 
     public void setMeta(HashMap<String, String> meta) {
-        this.meta = meta;
+        this.meta = new HashMap<>(meta);
     }
 
     public void setJsonapi(HashMap<String, String> jsonapi) {
-        this.jsonapi = jsonapi;
+        this.jsonapi = new HashMap<>(jsonapi);
     }
 
     public void setIncluded(ArrayList<DataRestEntity> included) {
-        this.included = included;
+        this.included = new ArrayList<>(included);
     }
 
     public HashMap<String, Object> getLinks() {
-        return links;
+        return new HashMap<>(links);
     }
 
     public void addIncluded(DataRestEntity object){
@@ -142,18 +146,18 @@ public class JsonApiRestResponseWrapper<T> {
     }
 
     public ArrayList<DataRestEntity> getIncluded() {
-        return included;
+        return included != null ? new ArrayList<>(included) : null;
     }
 
     public ArrayList<JsonApiError> getErrors() {
-        return errors;
+        return errors != null ? new ArrayList<>(errors) : null;
     }
 
     public void setErrors(ArrayList<JsonApiError> errors) {
-        this.errors = errors;
+        this.errors = new ArrayList<>(errors);
     }
 
-    public void addErorr(JsonApiError error){
+    public void addError(JsonApiError error){
         if(this.errors == null) this.errors = new ArrayList<>();
         this.errors.add(error);
     }
@@ -186,7 +190,7 @@ public class JsonApiRestResponseWrapper<T> {
     }
 
     public HashMap<String, String> getJsonapi() {
-        return jsonapi;
+        return new HashMap<>(jsonapi);
     }
 
     public void appendDuration(long start, long end) {
