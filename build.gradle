@@ -49,7 +49,6 @@ semanticRelease {
     repo {
         releaseAsset jar
         ghToken = System.getenv('GITHUB_TOKEN')
-        releaseAsset sourcesJar, name: "source.jar", label: 'the sources jar', contentType: 'application/zip'
     }
 }
 
