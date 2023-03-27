@@ -20,8 +20,8 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
-jar{
-    archiveName 'rest-interface.jar'
+jar {
+    archiveFileName ='rest-interface.jar'
 }
 
 publishing {
