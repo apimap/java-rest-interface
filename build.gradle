@@ -20,6 +20,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
+jar{
+    archiveName 'rest-interface.jar'
+}
+
 publishing {
     repositories {
         maven {
@@ -40,10 +44,12 @@ publishing {
 
 semanticRelease {
     releaseBranches {
-        include 'master'
+        include 'main'
     }
     repo {
+        releaseAsset jar
         ghToken = System.getenv('GITHUB_TOKEN')
+        releaseAsset sourcesJar, name: "source.jar", label: 'the sources jar', contentType: 'application/zip'
     }
 }
 
