@@ -33,7 +33,6 @@ jobs:
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
-                       - name: Set up JDK 16
       - name: Build
         run: ./gradlew build
       - name: Perform CodeQL Analysis
