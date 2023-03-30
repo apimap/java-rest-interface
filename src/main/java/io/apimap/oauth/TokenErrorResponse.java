@@ -18,12 +18,13 @@ package io.apimap.oauth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import sun.tools.jstat.Token;
 
 @Schema(
         name="TokenErrorResponse",
         description = "TokenErrorResponse"
 )
-public class TokenErrorResponse {
+public class TokenErrorResponse extends TokenResponse {
     @Schema(description = "Error Message",  required = true)
     @JsonProperty("error")
     protected String error;

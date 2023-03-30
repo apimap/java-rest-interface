@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
         name="TokenSuccessfulResponse",
         description = "TokenSuccessfulResponse"
 )
-public class TokenSuccessfulResponse {
+public class TokenSuccessfulResponse extends TokenResponse {
     @Schema(description = "Access token",  required = true)
     @JsonProperty("access_token")
     protected String accessToken;
